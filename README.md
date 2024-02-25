@@ -8,6 +8,8 @@ cmake --build ../build
 
 # command line to install application file to bin folder which is specified in CMakeLists.txt
 cmake --install ../build
+(uninstall afterward)
+cmake --build ../build --target uninstall
 
 # fresh
 cmake -S . -B ../build --fresh
@@ -17,3 +19,4 @@ cmake --build ../build --clean-first
 (or) 
 cmake --build ../build --target clean
 cmake --build ../build
+

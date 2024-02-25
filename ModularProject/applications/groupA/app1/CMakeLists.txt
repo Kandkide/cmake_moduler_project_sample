@@ -1,48 +1,60 @@
-# featureディレクトリ内のCMakeLists.txt
+# in applications directories with souce files (build exe file)
 cmake_minimum_required(VERSION 3.27)
 
-# ディレクトリ名を取得
+# Get the directory name
 get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
-# プロジェクト名を指定（バージョン不要：ルートで設定済み）
-project(${DIR_NAME}_project)
+# Specify the project name (no need for version as it's set at the root)
+project(${DIR_NAME}_project_apps)
 
-# C++23を使用するための設定
+# Set C++23 as the standard
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# コンパイラオプションの設定
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O3")
+# Set compiler options
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O3") ## DO CUSTOMIZE ##
 
-# メインプログラムのソースファイルを指定
-file(GLOB MAIN_SOURCES main_${DIR_NAME}.cpp)
+# Specify all source files that start with "main"
+file(GLOB MAIN_SOURCES main*.cpp) ## DO CUSTOMIZE ##
 
-# 実行ファイル名を設定（ここではディレクトリ名）
-set(EXE_TARGET_NAME ${DIR_NAME})
+# Set the executable name (using the directory name here)
+set(EXE_TARGET_NAME ${DIR_NAME}) ## DO CUSTOMIZE ##
 
+# Create the executable target
 add_executable(${EXE_TARGET_NAME} ${MAIN_SOURCES})
 
-# # Qt 6を使用する場合
-# find_package(Qt6 COMPONENTS Core REQUIRED)
-# target_link_libraries(${EXE_TARGET_NAME} PRIVATE Qt6::Core)
-# PUBLICを使うと、そのターゲットが依存する他のターゲットも同様にリンクされる
-# INTERFACEを使用すると、そのターゲットを利用する外部のプロジェクトに対してリンク
+# Uncomment and use the following lines if using Qt 6
+# find_package(Qt6 COMPONENTS Widgets REQUIRED)
+# target_link_libraries(${EXE_TARGET_NAME} PRIVATE Qt6::Widgets)
 
-# # pybind11を使用する場合
+# Uncomment and use the following lines if using pybind11
 # find_package(pybind11 REQUIRED)
 # target_link_libraries(${EXE_TARGET_NAME} PRIVATE pybind11::pybind11)
 
-# feature1に依存する場合（同一プロジェクト内での依存関係）
+# Uncomment and use the following lines if using within-project library (directory name is "feature1")
 target_link_libraries(${EXE_TARGET_NAME} PRIVATE feature1_lib)
 
-# メインプログラムがビルドされた後に実行されるコマンドを追加
+# Add a post-build command to run the executable after building
 add_custom_command(TARGET ${EXE_TARGET_NAME}
                     POST_BUILD
                     COMMAND ${CMAKE_COMMAND} -E echo "Running ${EXE_TARGET_NAME}..."
                     COMMAND $<TARGET_FILE:${EXE_TARGET_NAME}>)
 
-# インストール先の変数を参照
-# message(STATUS "Installation directory: ${APP_INSTALL_DIR}")
-# インストール先のディレクトリを指定（ソースディレクトリの親ディレクトリのbinに）
+# Specify the installation directory (parent directory's bin in this case)
 install(TARGETS ${EXE_TARGET_NAME} DESTINATION ${APP_INSTALL_DIR})
+
+# Create uninstall target
+add_custom_target(uninstall
+    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake
+)
+
+# Generate uninstall script with correct executable name
+configure_file(
+    "${CMAKE_SOURCE_DIR}/uninstall_apps.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake"
+    @ONLY
+)
+
+# Allow uninstall target to depend on install
+add_dependencies(uninstall ${EXE_TARGET_NAME})
