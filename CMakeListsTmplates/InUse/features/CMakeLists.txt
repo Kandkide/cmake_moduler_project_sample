@@ -26,7 +26,7 @@ set(LIB_TARGET_NAME ${DIR_NAME}_lib)
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${DIR_NAME}.cpp)
     list(APPEND LIB_SOURCES ${DIR_NAME}.cpp)
     # このライブラリのソースファイルを指定
-    add_library(${LIB_TARGET_NAME} PUBLIC ${LIB_SOURCES})
+    add_library(${LIB_TARGET_NAME} ${LIB_SOURCES})
     # インクルードディレクトリを指定
     target_include_directories(${LIB_TARGET_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})  
 else()
@@ -35,6 +35,7 @@ else()
     # インクルードディレクトリを指定
     target_include_directories(${LIB_TARGET_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 endif()
+
 # # Qt 6を使用する場合
 # find_package(Qt6 COMPONENTS Widgets REQUIRED)
 # target_link_libraries(${LIB_TARGET_NAME} PRIVATE Qt6::Widgets)
@@ -48,7 +49,6 @@ endif()
 # feature1に依存する場合（feature1は同一プロジェクト内にあるとする）
 # target_link_libraries(${LIB_TARGET_NAME} INTERFACE feature1_lib) # 最後のargのみ書き換える
 # シンプルで良いが。必ず、ルートでビルドすること。
-
 
 
 ###### part of making exe file ######

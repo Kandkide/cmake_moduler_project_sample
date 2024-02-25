@@ -34,8 +34,7 @@ add_executable(${EXE_TARGET_NAME} ${MAIN_SOURCES})
 # target_link_libraries(${EXE_TARGET_NAME} PRIVATE pybind11::pybind11)
 
 # feature1に依存する場合（同一プロジェクト内での依存関係）
-# target_link_libraries(${EXE_TARGET_NAME} PRIVATE feature3_lib)
-target_link_libraries(${EXE_TARGET_NAME} PRIVATE feature2_lib)
+target_link_libraries(${EXE_TARGET_NAME} PRIVATE feature3_lib)
 
 # メインプログラムがビルドされた後に実行されるコマンドを追加
 add_custom_command(TARGET ${EXE_TARGET_NAME}

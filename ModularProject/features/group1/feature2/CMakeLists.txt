@@ -14,7 +14,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O3")
 
 ###### part of making library (default is static library) ######
-# note: PUBLIC or PUBLIC (3 places + 1 place uncommented) I am not sure.
+# note: INTERFACE or PUBLIC (3 places + 1 place uncommented) I am not sure.
 
 # ヘッダーオンリーの場合のソースファイル
 set(LIB_SOURCES ${DIR_NAME}.hpp)
@@ -22,32 +22,34 @@ set(LIB_SOURCES ${DIR_NAME}.hpp)
 # ライブラリ名を変数に定義
 set(LIB_TARGET_NAME ${DIR_NAME}_lib)
 
-# ライブラリをビルド
-add_library(${LIB_TARGET_NAME} INTERFACE)
-
+# ソースファイルが存在する場合にのみ追加
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${DIR_NAME}.cpp)
+    list(APPEND LIB_SOURCES ${DIR_NAME}.cpp)
+    # このライブラリのソースファイルを指定
+    add_library(${LIB_TARGET_NAME} ${LIB_SOURCES})
+    # インクルードディレクトリを指定
+    target_include_directories(${LIB_TARGET_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})  
+else()
+    # ライブラリをビルド
+    add_library(${LIB_TARGET_NAME} INTERFACE)
+    # インクルードディレクトリを指定
+    target_include_directories(${LIB_TARGET_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+endif()
 # # Qt 6を使用する場合
-# find_package(Qt6 COMPONENTS Core REQUIRED)
-# target_link_libraries(${LIB_TARGET_NAME} PRIVATE Qt6::Core)
+# find_package(Qt6 COMPONENTS Widgets REQUIRED)
+# target_link_libraries(${LIB_TARGET_NAME} PRIVATE Qt6::Widgets)
 # PUBLICを使うと、そのターゲットが依存する他のターゲットも同様にリンクされる
-# PUBLICを使用すると、そのターゲットを利用する外部のプロジェクトに対してリンク
+# INTERFACEを使用すると、そのターゲットを利用する外部のプロジェクトに対してリンク
 
 # # pybind11を使用する場合
 # find_package(pybind11 REQUIRED)
 # target_link_libraries(${LIB_TARGET_NAME} PRIVATE pybind11::pybind11)
 
 # feature1に依存する場合（feature1は同一プロジェクト内にあるとする）
-target_link_libraries(${LIB_TARGET_NAME} PUBLIC feature1_lib) # 最後のargのみ書き換える
+target_link_libraries(${LIB_TARGET_NAME} PRIVATE feature1_lib) # 最後のargのみ書き換える
 # シンプルで良いが。必ず、ルートでビルドすること。
 
-# インクルードディレクトリを指定
-target_include_directories(${LIB_TARGET_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-# ソースファイルが存在する場合にのみ追加
-if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${DIR_NAME}.cpp)
-    list(APPEND LIB_SOURCES ${DIR_NAME}.cpp)
-    # このライブラリのソースファイルを指定
-    target_sources(${LIB_TARGET_NAME} PUBLIC ${LIB_SOURCES})
-endif()
 
 ###### part of making exe file ######
 

@@ -19,7 +19,7 @@ set(BUILD_FEATURES_MAIN_PROGRAM ON)
 set(MY_PROJECT_VERSION 1.2.3)
 
 # プロジェクト名とバージョンを指定
-project(${DIR_NAME}_project_root VERSION ${MY_PROJECT_VERSION})
+project(${DIR_NAME}_project_root VERSION ${MY_PROJECT_VERSION} LANGUAGES CXX)
 
 # 特定のサブディレクトリの名前をリストにする
 set(EXCLUDE_DIRS "groups" "build")
