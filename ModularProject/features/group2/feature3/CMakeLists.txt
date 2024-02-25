@@ -1,21 +1,73 @@
 # featureディレクトリ内のCMakeLists.txt
+
 cmake_minimum_required(VERSION 3.27)
 
-# ディレクトリ名を取得
 get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
-# プロジェクト名とバージョンを指定
-project(${DIR_NAME}_project VERSION 1.0)
+# プロジェクト名を指定（バージョン不要：ルートで設定済み）
+project(${DIR_NAME}_project_features)
 
-# 特定のサブディレクトリの名前をリストにする
-set(EXCLUDE_DIRS "")
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-# ディレクトリ内のすべてのサブディレクトリを検索して追加
-file(GLOB SUBDIR_LIST RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O3")
 
-foreach(SUBDIR IN LISTS SUBDIR_LIST)
-    # サブディレクトリが除外リストに含まれていない場合のみ処理を行う
-    if(IS_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${SUBDIR} AND NOT "${SUBDIR}" IN_LIST EXCLUDE_DIRS)
-        add_subdirectory(${SUBDIR})
-    endif()
-endforeach()
+###### part of making library (default is static library) ######
+# note: PUBLIC or PUBLIC (3 places + 1 place uncommented) I am not sure.
+
+# ヘッダーオンリーの場合のソースファイル
+set(LIB_SOURCES ${DIR_NAME}.hpp)
+
+# ライブラリ名を変数に定義
+set(LIB_TARGET_NAME ${DIR_NAME}_lib)
+
+# ライブラリをビルド
+add_library(${LIB_TARGET_NAME} INTERFACE)
+
+# # Qt 6を使用する場合
+# find_package(Qt6 COMPONENTS Core REQUIRED)
+# target_link_libraries(${LIB_TARGET_NAME} PRIVATE Qt6::Core)
+# PUBLICを使うと、そのターゲットが依存する他のターゲットも同様にリンクされる
+# PUBLICを使用すると、そのターゲットを利用する外部のプロジェクトに対してリンク
+
+# # pybind11を使用する場合
+# find_package(pybind11 REQUIRED)
+# target_link_libraries(${LIB_TARGET_NAME} PRIVATE pybind11::pybind11)
+
+# feature1に依存する場合（feature1は同一プロジェクト内にあるとする）
+# target_link_libraries(${LIB_TARGET_NAME} PUBLIC feature1_lib) # 最後のargのみ書き換える
+# シンプルで良いが。必ず、ルートでビルドすること。
+
+# インクルードディレクトリを指定
+target_include_directories(${LIB_TARGET_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+# ソースファイルが存在する場合にのみ追加
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${DIR_NAME}.cpp)
+    list(APPEND LIB_SOURCES ${DIR_NAME}.cpp)
+    # このライブラリのソースファイルを指定
+    target_sources(${LIB_TARGET_NAME} PUBLIC ${LIB_SOURCES})
+endif()
+
+###### part of making exe file ######
+
+# メインプログラムのソースファイルを指定
+file(GLOB MAIN_SOURCES main_${DIR_NAME}.cpp)
+
+# メインプログラムの名前を変数に定義
+set(EXE_TARGET_NAME ${DIR_NAME}_main)
+
+# メインプログラムのソースファイルが存在する場合にのみビルド
+if(BUILD_FEATURES_MAIN_PROGRAM AND MAIN_SOURCES)
+    add_executable(${EXE_TARGET_NAME} ${MAIN_SOURCES})
+    # ライブラリをリンク
+    target_link_libraries(${EXE_TARGET_NAME} PRIVATE ${LIB_TARGET_NAME})
+
+    # メインプログラムがビルドされた後に実行されるコマンドを追加
+    add_custom_command(TARGET ${EXE_TARGET_NAME}
+                       POST_BUILD
+                       COMMAND ${CMAKE_COMMAND} -E echo "Running ${EXE_TARGET_NAME}..."
+                       COMMAND $<TARGET_FILE:${EXE_TARGET_NAME}>)
+else()
+    message(STATUS "Main program build is disabled or main_${DIR_NAME}.cpp not found. Skipping executable build.")
+endif()

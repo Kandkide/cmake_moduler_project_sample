@@ -1,0 +1,10 @@
+if(NOT DEFINED CMAKE_INSTALL_PREFIX)
+    message(FATAL_ERROR "CMAKE_INSTALL_PREFIX not defined. Run cmake with -DCMAKE_INSTALL_PREFIX=<prefix>")
+endif()
+
+if(DEFINED HEADER_FILES)
+    file(REMOVE_RECURSE "${CMAKE_INSTALL_PREFIX}/include/${MY_SUBDIR_IDENTIFIER}/your_project")
+endif()
+
+file(REMOVE "${CMAKE_INSTALL_PREFIX}/lib/libyour_library.a") # ライブラリの場合
+file(REMOVE "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig/your_project.pc") # .pcファイルの場合

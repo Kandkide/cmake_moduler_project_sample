@@ -24,8 +24,8 @@ set(EXE_TARGET_NAME ${DIR_NAME})
 add_executable(${EXE_TARGET_NAME} ${MAIN_SOURCES})
 
 # # Qt 6を使用する場合
-find_package(Qt6 COMPONENTS Widgets REQUIRED)
-target_link_libraries(${EXE_TARGET_NAME} PRIVATE Qt6::Widgets)
+# find_package(Qt6 COMPONENTS Widgets REQUIRED)
+# target_link_libraries(${EXE_TARGET_NAME} PRIVATE Qt6::Widgets)
 # PUBLICを使うと、そのターゲットが依存する他のターゲットも同様にリンクされる
 # INTERFACEを使用すると、そのターゲットを利用する外部のプロジェクトに対してリンク
 
@@ -34,7 +34,8 @@ target_link_libraries(${EXE_TARGET_NAME} PRIVATE Qt6::Widgets)
 # target_link_libraries(${EXE_TARGET_NAME} PRIVATE pybind11::pybind11)
 
 # feature1に依存する場合（同一プロジェクト内での依存関係）
-# target_link_libraries(${EXE_TARGET_NAME} PRIVATE feature1_lib)
+# target_link_libraries(${EXE_TARGET_NAME} PRIVATE feature3_lib)
+target_link_libraries(${EXE_TARGET_NAME} PRIVATE feature2_lib)
 
 # メインプログラムがビルドされた後に実行されるコマンドを追加
 add_custom_command(TARGET ${EXE_TARGET_NAME}
