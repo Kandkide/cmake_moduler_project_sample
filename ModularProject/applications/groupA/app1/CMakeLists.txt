@@ -45,16 +45,16 @@ add_custom_command(TARGET ${EXE_TARGET_NAME}
 install(TARGETS ${EXE_TARGET_NAME} DESTINATION ${APP_INSTALL_DIR})
 
 # Create uninstall target
-add_custom_target(uninstall
-    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake
+add_custom_target(uninstall-${EXE_TARGET_NAME}
+    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/uninstall_apps.cmake
 )
 
 # Generate uninstall script with correct executable name
 configure_file(
     "${CMAKE_SOURCE_DIR}/uninstall_apps.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/uninstall_apps.cmake"
     @ONLY
 )
 
 # Allow uninstall target to depend on install
-add_dependencies(uninstall ${EXE_TARGET_NAME})
+add_dependencies(uninstall-${EXE_TARGET_NAME} ${EXE_TARGET_NAME})

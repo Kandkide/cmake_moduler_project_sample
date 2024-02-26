@@ -54,7 +54,7 @@ target_link_libraries(${LIB_TARGET_NAME} PRIVATE feature1_lib) # 最後のargの
 ###### part of making exe file ######
 
 # メインプログラムのソースファイルを指定
-file(GLOB MAIN_SOURCES main_${DIR_NAME}.cpp)
+file(GLOB MAIN_SOURCES main*.cpp)
 
 # メインプログラムの名前を変数に定義
 set(EXE_TARGET_NAME ${DIR_NAME}_main)

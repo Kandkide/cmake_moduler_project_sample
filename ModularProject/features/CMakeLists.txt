@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.27)
 get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 # プロジェクト名とバージョンを指定
-# project(${DIR_NAME}_project VERSION 1.0)
+project(${DIR_NAME}_project)
 
 # 特定のサブディレクトリの名前をリストにする
 set(EXCLUDE_DIRS "")
