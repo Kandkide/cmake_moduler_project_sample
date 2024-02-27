@@ -33,6 +33,12 @@ add_executable(${EXE_TARGET_NAME} ${MAIN_SOURCES})
 # target_link_libraries(${EXE_TARGET_NAME} PRIVATE pybind11::pybind11)
 
 # Uncomment and use the following lines if using within-project library (directory name is "feature1")
+find_package(mypr_feature1 REQUIRED)
+message(STATUS "mypr_feature1_FOUND: ${mypr_feature1_FOUND}")
+message(STATUS "mypr_feature1_INCLUDE_DIRS: ${mypr_feature1_INCLUDE_DIRS}")
+message(STATUS "mypr_feature1_LIBRARIES: ${mypr_feature1_LIBRARIES}")
+# target_include_directories(${EXE_TARGET_NAME} PRIVATE ${mypr_feature1_INCLUDE_DIRS})
+# target_link_libraries(${EXE_TARGET_NAME} PRIVATE ${mypr_feature1_LIBRARIES})
 target_link_libraries(${EXE_TARGET_NAME} PRIVATE feature1_lib)
 
 # Add a post-build command to run the executable after building
