@@ -7,14 +7,20 @@ get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 #----- Project-wide variable settings (DO CUSTOMIZE) -----#
 
 # Set the installation directory for the application executable (APP_INSTALL_DIR)
-set(APP_INSTALL_DIR ${CMAKE_SOURCE_DIR}/../bin CACHE PATH "Application installation directory")
+if(NOT DEFINED APP_INSTALL_DIR)
+    set(APP_INSTALL_DIR ${CMAKE_SOURCE_DIR}/../bin)
+endif()
 # It can be specified using the CMake command line as '-DAPP_INSTALL_DIR=...'
 
 # Add build options (whether to build the main program in the 'features' directory)
-set(BUILD_FEATURES_MAIN_PROGRAM ON) ## OPTION ##
+if(NOT DEFINED BUILD_FEATURES_MAIN_PROGRAM)
+    set(BUILD_FEATURES_MAIN_PROGRAM ON) ## OPTION ##
+endif()
 
 # Project version number
-set(MY_PROJECT_VERSION 1.2.3)
+if(NOT DEFINED MY_PROJECT_VERSION)
+    set(MY_PROJECT_VERSION 1.2.3)
+endif()
 
 # List of specific subdirectory names to be excluded (do not add to project)
 set(EXCLUDE_DIRS "groups" "build")

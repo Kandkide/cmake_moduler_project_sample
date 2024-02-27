@@ -8,7 +8,7 @@ get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 # Set the installation directory for the application executable (APP_INSTALL_DIR)
 if(NOT DEFINED APP_INSTALL_DIR)
-    set(APP_INSTALL_DIR ${CMAKE_SOURCE_DIR}/../bin)
+    set(APP_INSTALL_DIR ${CMAKE_SOURCE_DIR}/../../bin)
 endif()
 # It can be specified using the CMake command line as '-DAPP_INSTALL_DIR=...'
 
@@ -23,12 +23,12 @@ if(NOT DEFINED MY_PROJECT_VERSION)
 endif()
 
 # List of specific subdirectory names to be excluded (do not add to project)
-set(EXCLUDE_DIRS "groups" "build")
+set(EXCLUDE_DIRS "build")
 
 #----- Project-wide variable settings (end) -----#
 
 # Specify the project name and version
-project(${DIR_NAME}_project_root VERSION ${MY_PROJECT_VERSION} LANGUAGES CXX)
+project(${DIR_NAME}_project_applications_root VERSION ${MY_PROJECT_VERSION} LANGUAGES CXX)
 
 # Search and add all subdirectories within the directory
 file(GLOB SUBDIR_LIST RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *)
