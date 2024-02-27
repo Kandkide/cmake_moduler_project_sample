@@ -28,7 +28,7 @@ set(EXCLUDE_DIRS "groups" "build")
 #----- Project-wide variable settings (end) -----#
 
 # Specify the project name and version
-project(${DIR_NAME}_project_root VERSION ${MY_PROJECT_VERSION} LANGUAGES CXX)
+project(${MY_PROJECT_PREFIX}_${DIR_NAME}_as_root VERSION ${MY_PROJECT_VERSION} LANGUAGES CXX)
 
 # Search and add all subdirectories within the directory
 file(GLOB SUBDIR_LIST RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *)
