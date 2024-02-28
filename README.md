@@ -23,3 +23,5 @@ cmake --build ../build
 # build partially
 cmake --build ../build --target feature1_lib    
 
+# build or ../build
+either will do

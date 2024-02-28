@@ -79,13 +79,11 @@ endif()
 
 
 
-# moc destination
-set(MY_INSTALL_PREFIX "C:/Users/kandk/Downloads/codes_in_mouse_z6/cmake_moduler_project_sample/moc_destination")
 
 # インストール先ディレクトリの定義
-set(INCLUDE_INSTALL_DIR ${MY_INSTALL_PREFIX}/include/${PROJECT_NAME})
-set(LIB_INSTALL_DIR ${MY_INSTALL_PREFIX}/lib/${PROJECT_NAME})
-set(CMAKE_INSTALL_DIR ${MY_INSTALL_PREFIX}/lib/cmake/${PROJECT_NAME})
+set(INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME})
+set(LIB_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME})
+set(CMAKE_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/lib/cmake/${PROJECT_NAME})
 
 # Config.cmake ファイルの生成
 configure_file(

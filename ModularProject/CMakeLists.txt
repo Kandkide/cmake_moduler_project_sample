@@ -22,6 +22,13 @@ if(NOT DEFINED MY_PROJECT_VERSION)
     set(MY_PROJECT_VERSION 1.2.3)
 endif()
 
+# moc destination => mod to real destination
+if(NOT DEFINED CMAKE_INSTALL_PREFIX)
+    set(CMAKE_INSTALL_PREFIX "C:/Users/KK/Downloads/sampleandold_for_jupyter/clone/cmake_moduler_project_sample/moc_destination")
+endif()
+
+message(STATUS "CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
+
 # List of specific subdirectory names to be excluded (do not add to project)
 set(EXCLUDE_DIRS "groups" "build")
 

@@ -29,6 +29,11 @@ if(NOT DEFINED MY_PROJECT_PREFIX)
     set(MY_PROJECT_PREFIX "mypr")
 endif()
 
+# moc destination => mod to real destination
+if(NOT DEFINED CMAKE_INSTALL_PREFIX)
+    set(CMAKE_INSTALL_PREFIX "C:/Users/KK/Downloads/sampleandold_for_jupyter/clone/cmake_moduler_project_sample/moc_destination")
+endif()
+
 #----- Project-wide variable settings (end) -----#
 
 # Specify the project name and version
