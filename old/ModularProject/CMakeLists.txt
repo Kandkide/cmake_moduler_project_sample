@@ -23,8 +23,8 @@ if(NOT DEFINED MY_PROJECT_VERSION)
 endif()
 
 # moc destination => mod to real destination
-if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-    set(CMAKE_INSTALL_PREFIX "C:/Users/KK/Downloads/sampleandold_for_jupyter/clone/cmake_moduler_project_sample/moc_destination")
+if(NOT DEFINED MY_INSTALL_PREFIX)
+    set(MY_INSTALL_PREFIX "C:/Users/KK/Downloads/sampleandold_for_jupyter/clone/cmake_moduler_project_sample/moc_destination")
 endif()
 
 message(STATUS "CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")

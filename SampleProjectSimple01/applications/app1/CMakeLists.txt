@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.27)
 get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 # Specify the project name (no need for version as it's set at the root)
-project(${DIR_NAME}_project_apps)
+project(${MY_PROJECT_PREFIX}_${DIR_NAME})
 
 # Set C++23 as the standard
 set(CMAKE_CXX_STANDARD 23)
@@ -23,17 +23,6 @@ set(EXE_TARGET_NAME ${DIR_NAME}) ## DO CUSTOMIZE ##
 
 # Create the executable target
 add_executable(${EXE_TARGET_NAME} ${MAIN_SOURCES})
-
-# Uncomment and use the following lines if using Qt 6
-# find_package(Qt6 COMPONENTS Widgets REQUIRED)
-# target_link_libraries(${EXE_TARGET_NAME} PRIVATE Qt6::Widgets)
-
-# Uncomment and use the following lines if using pybind11
-# find_package(pybind11 REQUIRED)
-# target_link_libraries(${EXE_TARGET_NAME} PRIVATE pybind11::pybind11)
-
-# Uncomment and use the following lines if using within-project library (directory name is "feature1")
-target_link_libraries(${EXE_TARGET_NAME} PRIVATE feature3_lib)
 
 # Add a post-build command to run the executable after building
 add_custom_command(TARGET ${EXE_TARGET_NAME}

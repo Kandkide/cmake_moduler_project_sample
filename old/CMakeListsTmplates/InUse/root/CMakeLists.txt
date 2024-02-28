@@ -30,13 +30,13 @@ if(NOT DEFINED MY_PROJECT_PREFIX)
 endif()
 
 # moc destination => mod to real destination
-if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-    set(CMAKE_INSTALL_PREFIX "C:/Users/KK/Downloads/sampleandold_for_jupyter/clone/cmake_moduler_project_sample/moc_destination")
-    # set(CMAKE_INSTALL_PREFIX "C:/Users/kandk/Downloads/codes_in_mouse_z6/cmake_moduler_project_sample/moc_destination")
+if(NOT DEFINED MY_INSTALL_PREFIX)
+    set(MY_INSTALL_PREFIX "C:/Users/KK/Downloads/sampleandold_for_jupyter/clone/cmake_moduler_project_sample/moc_destination")
+    # set(MY_INSTALL_PREFIX "C:/Users/kandk/Downloads/codes_in_mouse_z6/cmake_moduler_project_sample/moc_destination")
 endif()
 
 if(NOT DEFINED CMAKE_PREFIX_PATH)
-    set(CMAKE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}")
+    set(CMAKE_PREFIX_PATH "${MY_INSTALL_PREFIX}")
 endif()
 
 #----- Project-wide variable settings (end) -----#

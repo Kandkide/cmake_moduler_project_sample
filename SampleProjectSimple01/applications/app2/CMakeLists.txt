@@ -24,22 +24,9 @@ set(EXE_TARGET_NAME ${DIR_NAME}) ## DO CUSTOMIZE ##
 # Create the executable target
 add_executable(${EXE_TARGET_NAME} ${MAIN_SOURCES})
 
-# Uncomment and use the following lines if using Qt 6
-# find_package(Qt6 COMPONENTS Widgets REQUIRED)
-# target_link_libraries(${EXE_TARGET_NAME} PRIVATE Qt6::Widgets)
-
-# Uncomment and use the following lines if using pybind11
-# find_package(pybind11 REQUIRED)
-# target_link_libraries(${EXE_TARGET_NAME} PRIVATE pybind11::pybind11)
-
-# Uncomment and use the following lines if using within-project library (directory name is "feature1")
-find_package(mypr_feature1 REQUIRED)
-message(STATUS "mypr_feature1_FOUND: ${mypr_feature1_FOUND}")
-message(STATUS "mypr_feature1_INCLUDE_DIRS: ${mypr_feature1_INCLUDE_DIRS}")
-message(STATUS "mypr_feature1_LIBRARIES: ${mypr_feature1_LIBRARIES}")
-# target_include_directories(${EXE_TARGET_NAME} PRIVATE ${mypr_feature1_INCLUDE_DIRS})
-# target_link_libraries(${EXE_TARGET_NAME} PRIVATE ${mypr_feature1_LIBRARIES})
-target_link_libraries(${EXE_TARGET_NAME} PRIVATE feature1_lib)
+# Uncomment and use the following lines if using Qt 6 (uncommented)
+find_package(Qt6 COMPONENTS Widgets REQUIRED)
+target_link_libraries(${EXE_TARGET_NAME} PRIVATE Qt6::Widgets)
 
 # Add a post-build command to run the executable after building
 add_custom_command(TARGET ${EXE_TARGET_NAME}

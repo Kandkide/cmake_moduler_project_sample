@@ -3,25 +3,26 @@ cmake_moduler_project_sample
 
 
 # command line
-cmake -S . -B ../build
-cmake --build ../build
+cmake -S . -B build
+cmake --build build
 
 # command line to install application file to bin folder which is specified in CMakeLists.txt
-cmake --install ../build
+cmake --install build
 (uninstall afterward)
-cmake --build ../build --target uninstall-app1 <== individual directory name required
+cmake --build build --target uninstall-app1 
+    *note: directory name added
 
 # fresh
-cmake -S . -B ../build --fresh
+cmake -S . -B build --fresh
 
 # target clean
-cmake --build ../build --clean-first
+cmake --build build --clean-first
 (or) 
-cmake --build ../build --target clean
-cmake --build ../build
+cmake --build build --target clean
+cmake --build build
 
 # build partially
-cmake --build ../build --target feature1_lib    
+cmake --build build --target feature1_lib    
 
 # build or ../build
 either will do

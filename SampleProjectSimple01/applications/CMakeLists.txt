@@ -6,36 +6,41 @@ get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 #----- Project-wide variable settings (DO CUSTOMIZE) -----#
 
-# Set the installation directory for the application executable (APP_INSTALL_DIR)
-if(NOT DEFINED APP_INSTALL_DIR)
-    set(APP_INSTALL_DIR ${CMAKE_SOURCE_DIR}/../../bin)
-endif()
-# It can be specified using the CMake command line as '-DAPP_INSTALL_DIR=...'
-
 # Add build options (whether to build the main program in the 'features' directory)
-if(NOT DEFINED BUILD_FEATURES_MAIN_PROGRAM)
+if(NOT BUILD_FEATURES_MAIN_PROGRAM)
     set(BUILD_FEATURES_MAIN_PROGRAM ON) ## OPTION ##
 endif()
 
 # Project version number
-if(NOT DEFINED MY_PROJECT_VERSION)
+if(NOT MY_PROJECT_VERSION)
     set(MY_PROJECT_VERSION 1.2.3)
 endif()
 
 # List of specific subdirectory names to be excluded (do not add to project)
-set(EXCLUDE_DIRS "groups" "build")
+set(EXCLUDE_DIRS "groups" "build" "check")
 
-if(NOT DEFINED MY_PROJECT_PREFIX)
+if(NOT MY_PROJECT_PREFIX)
     set(MY_PROJECT_PREFIX "mypr")
 endif()
 
+message(STATUS "(UPPER) CMAKE_SOURCE_DIR: ${CMAKE_SOURCE_DIR}")
+
 # moc destination => mod to real destination
-if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-    set(CMAKE_INSTALL_PREFIX "C:/Users/KK/Downloads/sampleandold_for_jupyter/clone/cmake_moduler_project_sample/moc_destination")
+if(NOT MY_INSTALL_PREFIX)
+    set(MY_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/..)
+    # set(MY_INSTALL_PREFIX "C:/Users/KK/Downloads/sampleandold_for_jupyter/clone/cmake_moduler_project_sample/moc_destination")
+    # set(MY_INSTALL_PREFIX "C:/Users/kandk/Downloads/codes_in_mouse_z6/cmake_moduler_project_sample/moc_destination")
 endif()
 
-set(CMAKE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}")
-message(STATUS "CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
+# Set the installation directory for the application executable (APP_INSTALL_DIR)
+if(NOT APP_INSTALL_DIR)
+    set(APP_INSTALL_DIR ${MY_INSTALL_PREFIX}/bin)
+endif()
+# It can be specified using the CMake command line as '-DAPP_INSTALL_DIR=...'
+
+if(NOT CMAKE_PREFIX_PATH)
+    set(CMAKE_PREFIX_PATH "${MY_INSTALL_PREFIX}")
+endif()
 
 #----- Project-wide variable settings (end) -----#
 
