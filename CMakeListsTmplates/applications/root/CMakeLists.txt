@@ -23,8 +23,6 @@ if(NOT MY_PROJECT_PREFIX)
     set(MY_PROJECT_PREFIX "mypr")
 endif()
 
-message(STATUS "(UPPER) CMAKE_SOURCE_DIR: ${CMAKE_SOURCE_DIR}")
-
 # moc destination => mod to real destination
 if(NOT MY_INSTALL_PREFIX)
     set(MY_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/..)

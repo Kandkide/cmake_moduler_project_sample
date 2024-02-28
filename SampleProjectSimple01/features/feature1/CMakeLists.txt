@@ -1,5 +1,3 @@
-# featureディレクトリ内のCMakeLists.txt
-
 cmake_minimum_required(VERSION 3.27)
 
 get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
@@ -28,18 +26,22 @@ if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${DIR_NAME}.cpp)
     # このライブラリのソースファイルを指定
     add_library(${LIB_TARGET_NAME} ${LIB_SOURCES})
     # インクルードディレクトリを指定
-    target_include_directories(${LIB_TARGET_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})  
+    # target_include_directories(${LIB_TARGET_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})  
 else()
     # ライブラリをビルド
     add_library(${LIB_TARGET_NAME} INTERFACE)
     # インクルードディレクトリを指定
-    target_include_directories(${LIB_TARGET_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+    # target_include_directories(${LIB_TARGET_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 endif()
 
-# # Set the public headers for the library
-# set_target_properties(${LIB_TARGET_NAME} PROPERTIES
-#     PUBLIC_HEADER "${CMAKE_CURRENT_SOURCE_DIR}/${DIR_NAME}.hpp"
-# )
+## PLAN A ##
+add_library(${CMAKE_PROJECT_NAME}::${LIB_TARGET_NAME} ALIAS ${LIB_TARGET_NAME})
+
+# Set the public headers for the library ##( PLAN A )##
+set_target_properties(${LIB_TARGET_NAME} PROPERTIES
+    PUBLIC_HEADER "${DIR_NAME}.hpp"
+)
+
 
 # # Qt 6を使用する場合
 # find_package(Qt6 COMPONENTS Widgets REQUIRED)
@@ -54,7 +56,6 @@ endif()
 # feature1に依存する場合（feature1は同一プロジェクト内にあるとする）
 # target_link_libraries(${LIB_TARGET_NAME} INTERFACE feature1_lib) # 最後のargのみ書き換える
 # シンプルで良いが。必ず、ルートでビルドすること。
-
 
 
 ###### part of making exe file ######
@@ -81,57 +82,14 @@ else()
 endif()
 
 
-# # moc destination
-# set(MY_INSTALL_PREFIX "C:/Users/kandk/Downloads/codes_in_mouse_z6/cmake_moduler_project_sample/moc_destination")
 
-# インストール先ディレクトリの定義
-set(INCLUDE_INSTALL_DIR ${MY_INSTALL_PREFIX}/include/${PROJECT_NAME})
-set(LIB_INSTALL_DIR ${MY_INSTALL_PREFIX}/lib/${PROJECT_NAME})
-set(CMAKE_INSTALL_DIR ${MY_INSTALL_PREFIX}/lib/cmake/${PROJECT_NAME})
+##( PLAN A )##
 
-# Config.cmake ファイルの生成
-configure_file(
-  "${CMAKE_SOURCE_DIR}/Config.cmake.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-  @ONLY
-)
-
-# インストール
 install(
-  TARGETS
-    ${LIB_TARGET_NAME}
-  EXPORT
-    ${CMAKE_PROJECT_NAME}Export  # これがエクスポート グループの名前です
-  LIBRARY DESTINATION ${LIB_INSTALL_DIR}
-  ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
-#   PUBLIC_HEADER DESTINATION ${INCLUDE_INSTALL_DIR}
-#   RUNTIME DESTINATION bin
-#   INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR}
-)
-
-# Install header files
-install(
-  FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/${DIR_NAME}.hpp
-  DESTINATION
-    ${INCLUDE_INSTALL_DIR}
-)
-
-# Config.cmake ファイルのインストール
-install(
-  FILES
-    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-  DESTINATION
-    ${CMAKE_INSTALL_DIR}
-)
-
-# # エクスポート グループの作成
-# install(
-#   EXPORT
-#     ${CMAKE_PROJECT_NAME}Export  # エクスポート グループの名前を指定します
-#   FILE
-#     ${PROJECT_NAME}Targets.cmake  # ターゲット ファイルの名前を指定します
-#   DESTINATION
-#     ${CMAKE_INSTALL_DIR}
-# )
-# message(STATUS "CMAKE_CURRENT_SOURCE_DIR: ${CMAKE_CURRENT_SOURCE_DIR}")
+    TARGETS ${LIB_TARGET_NAME}
+    EXPORT ${CMAKE_PROJECT_NAME}Targets
+    INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR} # no use?
+    PUBLIC_HEADER DESTINATION ${INCLUDE_INSTALL_DIR}
+    ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
+    # LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+    )
