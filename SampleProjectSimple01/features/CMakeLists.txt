@@ -17,28 +17,23 @@ if(NOT MY_PROJECT_VERSION)
 endif()
 
 # List of specific subdirectory names to be excluded (do not add to project)
-set(EXCLUDE_DIRS "feature2" "feature3" "build")
+set(EXCLUDE_DIRS "build")
 
 if(NOT MY_PROJECT_PREFIX)
     set(MY_PROJECT_PREFIX "mypr")
 endif()
 
 # ## DO CUSTOMIZE (STRONG) ##
-if(NOT MY_INSTALL_PREFIX)
-    set(MY_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/..)
-endif()
-
-# ## consider to unify MY_INSTALL_PREFIX to CMAKE_INSTALL_PREFIX ##
-set(CMAKE_INSTALL_PREFIX ${MY_INSTALL_PREFIX})
+set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/..)
 
 # Set the installation directory for the application executable (APP_INSTALL_DIR) ##  no use in features ##
 if(NOT APP_INSTALL_DIR)
-    set(APP_INSTALL_DIR ${MY_INSTALL_PREFIX}/bin)
+    set(APP_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/bin)
 endif()
 # It can be specified using the CMake command line as '-DAPP_INSTALL_DIR=...'
 
 if(NOT CMAKE_PREFIX_PATH)
-    set(CMAKE_PREFIX_PATH "${MY_INSTALL_PREFIX}")
+    set(CMAKE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}")
 endif()
 
 #----- Project-wide variable settings (end) -----#
@@ -59,14 +54,9 @@ endforeach()
 
 #---- Targets and Config install related ----#
 
-# インストール先ディレクトリの定義
-set(INCLUDE_INSTALL_DIR ${MY_INSTALL_PREFIX}/include/${CMAKE_PROJECT_NAME})
-set(LIB_INSTALL_DIR ${MY_INSTALL_PREFIX}/lib/${CMAKE_PROJECT_NAME})
-set(CMAKE_INSTALL_DIR ${MY_INSTALL_PREFIX}/lib/cmake/${CMAKE_PROJECT_NAME})
-
 install(
     EXPORT ${CMAKE_PROJECT_NAME}Targets
-    DESTINATION ${CMAKE_INSTALL_DIR}
+    DESTINATION lib/cmake/${CMAKE_PROJECT_NAME}
     NAMESPACE ${CMAKE_PROJECT_NAME}::
     FILE ${CMAKE_PROJECT_NAME}Targets.cmake)
 
@@ -74,8 +64,8 @@ include(CMakePackageConfigHelpers)
 configure_package_config_file( 
     "Config.cmake.in" 
     "${CMAKE_PROJECT_NAME}Config.cmake"
-    INSTALL_DESTINATION ${CMAKE_INSTALL_DIR})
+    INSTALL_DESTINATION lib/cmake/${CMAKE_PROJECT_NAME})
 
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}Config.cmake"
-    DESTINATION ${CMAKE_INSTALL_DIR})
+    DESTINATION lib/cmake/${CMAKE_PROJECT_NAME})

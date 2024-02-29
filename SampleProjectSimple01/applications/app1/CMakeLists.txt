@@ -24,6 +24,9 @@ set(EXE_TARGET_NAME ${DIR_NAME}) ## DO CUSTOMIZE ##
 # Create the executable target
 add_executable(${EXE_TARGET_NAME} ${MAIN_SOURCES})
 
+find_package(mypr_features REQUIRED)
+target_link_libraries(${EXE_TARGET_NAME} PRIVATE mypr_features::feature1)
+
 # Add a post-build command to run the executable after building
 add_custom_command(TARGET ${EXE_TARGET_NAME}
                     POST_BUILD

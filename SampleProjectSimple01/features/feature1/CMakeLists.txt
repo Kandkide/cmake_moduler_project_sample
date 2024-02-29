@@ -18,7 +18,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O3")
 set(LIB_SOURCES ${DIR_NAME}.hpp)
 
 # ライブラリ名を変数に定義
-set(LIB_TARGET_NAME ${DIR_NAME}_lib)
+set(LIB_TARGET_NAME ${DIR_NAME})
 
 # ソースファイルが存在する場合にのみ追加
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${DIR_NAME}.cpp)
@@ -26,7 +26,7 @@ if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${DIR_NAME}.cpp)
     # このライブラリのソースファイルを指定
     add_library(${LIB_TARGET_NAME} ${LIB_SOURCES})
     # インクルードディレクトリを指定
-    # target_include_directories(${LIB_TARGET_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})  
+    target_include_directories(${LIB_TARGET_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)  
 else()
     # ライブラリをビルド
     add_library(${LIB_TARGET_NAME} INTERFACE)
@@ -58,6 +58,17 @@ set_target_properties(${LIB_TARGET_NAME} PROPERTIES
 # シンプルで良いが。必ず、ルートでビルドすること。
 
 
+##( PLAN A )##
+
+install(
+    TARGETS ${LIB_TARGET_NAME}
+    EXPORT ${CMAKE_PROJECT_NAME}Targets
+    INCLUDES DESTINATION include/${CMAKE_PROJECT_NAME} # no use?
+    PUBLIC_HEADER DESTINATION include/${CMAKE_PROJECT_NAME}
+    ARCHIVE DESTINATION lib/${CMAKE_PROJECT_NAME}
+    # LIBRARY DESTINATION lib/${CMAKE_PROJECT_NAME}
+    )
+
 ###### part of making exe file ######
 
 # メインプログラムのソースファイルを指定
@@ -81,15 +92,3 @@ else()
     message(STATUS "Main program build is disabled or main_${DIR_NAME}.cpp not found. Skipping executable build.")
 endif()
 
-
-
-##( PLAN A )##
-
-install(
-    TARGETS ${LIB_TARGET_NAME}
-    EXPORT ${CMAKE_PROJECT_NAME}Targets
-    INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR} # no use?
-    PUBLIC_HEADER DESTINATION ${INCLUDE_INSTALL_DIR}
-    ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
-    # LIBRARY DESTINATION ${LIB_INSTALL_DIR}
-    )

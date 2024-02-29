@@ -19,7 +19,7 @@ set(CMAKE_IMPORT_FILE_VERSION 1)
 set(_cmake_targets_defined "")
 set(_cmake_targets_not_defined "")
 set(_cmake_expected_targets "")
-foreach(_cmake_expected_target IN ITEMS mypr_features::feature1_lib)
+foreach(_cmake_expected_target IN ITEMS mypr_features::feature1 mypr_features::feature2 mypr_features::feature3)
   list(APPEND _cmake_expected_targets "${_cmake_expected_target}")
   if(TARGET "${_cmake_expected_target}")
     list(APPEND _cmake_targets_defined "${_cmake_expected_target}")
@@ -46,11 +46,40 @@ unset(_cmake_targets_not_defined)
 unset(_cmake_expected_targets)
 
 
-# The installation prefix configured by this project.
-set(_IMPORT_PREFIX "C:/Users/kandk/Downloads/codes_in_mouse_z6/cmake_moduler_project_sample/SampleProjectSimple01/features/..")
+# Compute the installation prefix relative to this file.
+get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH)
+if(_IMPORT_PREFIX STREQUAL "/")
+  set(_IMPORT_PREFIX "")
+endif()
 
-# Create imported target mypr_features::feature1_lib
-add_library(mypr_features::feature1_lib STATIC IMPORTED)
+# Create imported target mypr_features::feature1
+add_library(mypr_features::feature1 STATIC IMPORTED)
+
+set_target_properties(mypr_features::feature1 PROPERTIES
+  INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include/mypr_features"
+)
+
+# Create imported target mypr_features::feature2
+add_library(mypr_features::feature2 STATIC IMPORTED)
+
+set_target_properties(mypr_features::feature2 PROPERTIES
+  INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include/mypr_features"
+  INTERFACE_LINK_LIBRARIES "\$<LINK_ONLY:mypr_features::feature1>;\$<LINK_ONLY:mypr_features::feature3>"
+)
+
+# Create imported target mypr_features::feature3
+add_library(mypr_features::feature3 INTERFACE IMPORTED)
+
+set_target_properties(mypr_features::feature3 PROPERTIES
+  INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include/mypr_features"
+)
+
+if(CMAKE_VERSION VERSION_LESS 3.0.0)
+  message(FATAL_ERROR "This file relies on consumers using CMake 3.0.0 or greater.")
+endif()
 
 # Load information for each installed configuration.
 file(GLOB _cmake_config_files "${CMAKE_CURRENT_LIST_DIR}/mypr_featuresTargets-*.cmake")

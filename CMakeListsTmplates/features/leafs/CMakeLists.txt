@@ -18,7 +18,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O3")
 set(LIB_SOURCES ${DIR_NAME}.hpp)
 
 # ライブラリ名を変数に定義
-set(LIB_TARGET_NAME ${DIR_NAME}_lib)
+set(LIB_TARGET_NAME ${DIR_NAME})
 
 # ソースファイルが存在する場合にのみ追加
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${DIR_NAME}.cpp)
@@ -26,18 +26,22 @@ if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${DIR_NAME}.cpp)
     # このライブラリのソースファイルを指定
     add_library(${LIB_TARGET_NAME} ${LIB_SOURCES})
     # インクルードディレクトリを指定
-    target_include_directories(${LIB_TARGET_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})  
+    target_include_directories(${LIB_TARGET_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>) 
 else()
     # ライブラリをビルド
     add_library(${LIB_TARGET_NAME} INTERFACE)
     # インクルードディレクトリを指定
-    target_include_directories(${LIB_TARGET_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+    target_include_directories(${LIB_TARGET_NAME} INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 endif()
 
-# # Set the public headers for the library ##( PLAN A )##
-# set_target_properties(${LIB_TARGET_NAME} PROPERTIES
-#     PUBLIC_HEADER "${CMAKE_CURRENT_SOURCE_DIR}/${DIR_NAME}.hpp"
-# )
+## PLAN A ##
+add_library(${CMAKE_PROJECT_NAME}::${LIB_TARGET_NAME} ALIAS ${LIB_TARGET_NAME})
+
+# Set the public headers for the library ##( PLAN A )##
+set_target_properties(${LIB_TARGET_NAME} PROPERTIES
+    PUBLIC_HEADER "${DIR_NAME}.hpp"
+)
+
 
 # # Qt 6を使用する場合
 # find_package(Qt6 COMPONENTS Widgets REQUIRED)
@@ -50,8 +54,20 @@ endif()
 # target_link_libraries(${LIB_TARGET_NAME} PRIVATE pybind11::pybind11)
 
 # feature1に依存する場合（feature1は同一プロジェクト内にあるとする）
-# target_link_libraries(${LIB_TARGET_NAME} INTERFACE feature1_lib) # 最後のargのみ書き換える
+# # add_dependencies(${LIB_TARGET_NAME} feature1) ## need or not ##
+# target_link_libraries(${LIB_TARGET_NAME} INTERFACE feature1) # 最後のargのみ書き換える
 # シンプルで良いが。必ず、ルートでビルドすること。
+
+##( PLAN A )##
+
+install(
+    TARGETS ${LIB_TARGET_NAME}
+    EXPORT ${CMAKE_PROJECT_NAME}Targets
+    INCLUDES DESTINATION include/${CMAKE_PROJECT_NAME} # no use?
+    PUBLIC_HEADER DESTINATION include/${CMAKE_PROJECT_NAME}
+    ARCHIVE DESTINATION lib/${CMAKE_PROJECT_NAME}
+    # LIBRARY DESTINATION lib/${CMAKE_PROJECT_NAME}
+    )
 
 
 ###### part of making exe file ######
@@ -76,67 +92,3 @@ if(BUILD_FEATURES_MAIN_PROGRAM AND MAIN_SOURCES)
 else()
     message(STATUS "Main program build is disabled or main_${DIR_NAME}.cpp not found. Skipping executable build.")
 endif()
-
-
-
-
-# インストール先ディレクトリの定義
-set(INCLUDE_INSTALL_DIR ${MY_INSTALL_PREFIX}/include/${PROJECT_NAME})
-set(LIB_INSTALL_DIR ${MY_INSTALL_PREFIX}/lib/${PROJECT_NAME})
-set(CMAKE_INSTALL_DIR ${MY_INSTALL_PREFIX}/lib/cmake/${PROJECT_NAME})
-
-# Config.cmake ファイルの生成
-configure_file(
-  "${CMAKE_SOURCE_DIR}/Config.cmake.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-  @ONLY
-)
-
-# インストール
-install(
-  TARGETS
-    ${LIB_TARGET_NAME}
-  EXPORT
-    ${CMAKE_PROJECT_NAME}Export  # これがエクスポート グループの名前です
-  LIBRARY DESTINATION ${LIB_INSTALL_DIR}
-  ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
-#   PUBLIC_HEADER DESTINATION ${INCLUDE_INSTALL_DIR} ##( PLAN A )##
-#   RUNTIME DESTINATION bin
-#   INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR}
-)
-
-# Install header files ##( PLAN B )##
-install(
-  FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/${DIR_NAME}.hpp
-  DESTINATION
-    ${INCLUDE_INSTALL_DIR}
-)
-
-# Config.cmake ファイルのインストール
-install(
-  FILES
-    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-  DESTINATION
-    ${CMAKE_INSTALL_DIR}
-)
-
-# # エクスポート グループの作成
-# install(
-#   EXPORT
-#     ${CMAKE_PROJECT_NAME}Export  # エクスポート グループの名前を指定します
-#   FILE
-#     ${PROJECT_NAME}Targets.cmake  # ターゲット ファイルの名前を指定します
-#   DESTINATION
-#     ${LIB_INSTALL_DIR}/cmake/${CMAKE_PROJECT_NAME}
-# )
-
-# # エクスポート グループの作成
-# install(
-#   EXPORT
-#     ${CMAKE_PROJECT_NAME}Export  # エクスポート グループの名前を指定します
-#   FILE
-#     ${PROJECT_NAME}Targets.cmake  # ターゲット ファイルの名前を指定します
-#   DESTINATION
-#     ${CMAKE_INSTALL_DIR}
-# )

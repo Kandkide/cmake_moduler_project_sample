@@ -23,29 +23,23 @@ if(NOT MY_PROJECT_PREFIX)
     set(MY_PROJECT_PREFIX "mypr")
 endif()
 
-message(STATUS "(UPPER) CMAKE_SOURCE_DIR: ${CMAKE_SOURCE_DIR}")
+# ## DO CUSTOMIZE (STRONG) ##
+set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/..)
 
-# moc destination => mod to real destination
-if(NOT MY_INSTALL_PREFIX)
-    set(MY_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/..)
-    # set(MY_INSTALL_PREFIX "C:/Users/KK/Downloads/sampleandold_for_jupyter/clone/cmake_moduler_project_sample/moc_destination")
-    # set(MY_INSTALL_PREFIX "C:/Users/kandk/Downloads/codes_in_mouse_z6/cmake_moduler_project_sample/moc_destination")
-endif()
-
-# Set the installation directory for the application executable (APP_INSTALL_DIR)
+# Set the installation directory for the application executable (APP_INSTALL_DIR) ##  no use in features ##
 if(NOT APP_INSTALL_DIR)
-    set(APP_INSTALL_DIR ${MY_INSTALL_PREFIX}/bin)
+    set(APP_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/bin)
 endif()
 # It can be specified using the CMake command line as '-DAPP_INSTALL_DIR=...'
 
 if(NOT CMAKE_PREFIX_PATH)
-    set(CMAKE_PREFIX_PATH "${MY_INSTALL_PREFIX}")
+    set(CMAKE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}")
 endif()
 
 #----- Project-wide variable settings (end) -----#
 
 # Specify the project name and version
-project(${MY_PROJECT_PREFIX}_${DIR_NAME}_as_root VERSION ${MY_PROJECT_VERSION} LANGUAGES CXX)
+project(${MY_PROJECT_PREFIX}_${DIR_NAME} VERSION ${MY_PROJECT_VERSION} LANGUAGES CXX)
 
 # Search and add all subdirectories within the directory
 file(GLOB SUBDIR_LIST RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *)
