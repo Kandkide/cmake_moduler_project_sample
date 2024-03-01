@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.27)
 # Get the directory name (DIR_NAME)
 get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
-#----- Project-wide variable settings (DO CUSTOMIZE) -----#
+#@ CUSTOM BLICK START @#
 
 # Add build options (whether to build the main program in the 'features' directory)
 if(NOT BUILD_FEATURES_MAIN_PROGRAM)
@@ -17,7 +17,7 @@ if(NOT MY_PROJECT_VERSION)
 endif()
 
 # List of specific subdirectory names to be excluded (do not add to project)
-set(EXCLUDE_DIRS "build")
+set(EXCLUDE_DIRS "build" "check")
 
 if(NOT MY_PROJECT_PREFIX)
     set(MY_PROJECT_PREFIX "mypr")
@@ -36,7 +36,7 @@ if(NOT CMAKE_PREFIX_PATH)
     set(CMAKE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}")
 endif()
 
-#----- Project-wide variable settings (end) -----#
+#@ CUSTOM BLICK END @#
 
 # Specify the project name and version
 project(${MY_PROJECT_PREFIX}_${DIR_NAME} VERSION ${MY_PROJECT_VERSION} LANGUAGES CXX)
@@ -50,22 +50,3 @@ foreach(SUBDIR IN LISTS SUBDIR_LIST)
         add_subdirectory(${SUBDIR})
     endif()
 endforeach()
-
-
-#---- Targets and Config install related ----#
-
-install(
-    EXPORT ${CMAKE_PROJECT_NAME}Targets
-    DESTINATION lib/cmake/${CMAKE_PROJECT_NAME}
-    NAMESPACE ${CMAKE_PROJECT_NAME}::
-    FILE ${CMAKE_PROJECT_NAME}Targets.cmake)
-
-include(CMakePackageConfigHelpers)
-configure_package_config_file( 
-    "Config.cmake.in" 
-    "${CMAKE_PROJECT_NAME}Config.cmake"
-    INSTALL_DESTINATION lib/cmake/${CMAKE_PROJECT_NAME})
-
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}Config.cmake"
-    DESTINATION lib/cmake/${CMAKE_PROJECT_NAME})
