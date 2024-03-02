@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.27)
 get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 # プロジェクト名を指定（バージョン不要：ルートで設定済み）
-project(${MY_PROJECT_PREFIX}_${DIR_NAME})
+project(${MY_PROJECT_PREFIX}${DIR_NAME})
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

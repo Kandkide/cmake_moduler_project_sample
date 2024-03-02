@@ -20,7 +20,7 @@ endif()
 set(EXCLUDE_DIRS "groups" "build" "check")
 
 if(NOT MY_PROJECT_PREFIX)
-    set(MY_PROJECT_PREFIX "mypr")
+    set(MY_PROJECT_PREFIX "mypr_")
 endif()
 
 # ## DO CUSTOMIZE (STRONG) ##
@@ -39,7 +39,7 @@ endif()
 #----- Project-wide variable settings (end) -----#
 
 # Specify the project name and version
-project(${MY_PROJECT_PREFIX}_${DIR_NAME} VERSION ${MY_PROJECT_VERSION} LANGUAGES CXX)
+project(${MY_PROJECT_PREFIX}${DIR_NAME} VERSION ${MY_PROJECT_VERSION} LANGUAGES CXX)
 
 # Search and add all subdirectories within the directory
 file(GLOB SUBDIR_LIST RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *)

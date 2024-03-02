@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.27)
 get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 # Specify the project name (no need for version as it's set at the root)
-project(${MY_PROJECT_PREFIX}_${DIR_NAME})
+project(${MY_PROJECT_PREFIX}${DIR_NAME})
 
 # Set C++23 as the standard
 set(CMAKE_CXX_STANDARD 23)
