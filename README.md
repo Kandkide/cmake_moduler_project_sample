@@ -16,25 +16,28 @@ there are two subdirectories:
 * sample_components
 
 ## under the applications directory
-use for making executables (i.e. applications) 
+use for making executables. 
 
 there are two subdirectories: 
 * cmakelists_templates
 * sample_application
 
 # command lines
+A components project has a two-tier directory structure.  
+Therefore, in this case the command must be executed in a higher directory.
+
 ## common
-cmake -S . -B build
-cmake --build build
+cmake -S . -B build  
+cmake --build build  
 
 ## install
-cmake --install build
-(exe file is installed in case of applications) 
-(headers, libraries, and config.cmake files in case of components)
+cmake --install build  
+(exe file is installed in case of applications)  
+(headers, libraries, and config.cmake files in case of components)  
 
 ## uninstall (applicable only to applications)
 cmake --build build --target uninstall
 
-## build partially
-cmake --build build --target feature1_lib    
+## build partially (applicable only to components)
+cmake --build build --target component1  
 
