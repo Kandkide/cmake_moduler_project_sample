@@ -1,5 +1,19 @@
-# applications bottom 1.2.2
+# applications bottom 1.2.0
 cmake_minimum_required(VERSION 3.5...3.27)
+
+# # ------------------------------------------------------------- #
+# # CMAKE_INSTALL_PREFIX and CMAKE_PREFIX_PATH are set to USER_HOME (common to all projects)
+# if (UNIX)
+# execute_process(COMMAND sh -c "echo $HOME" OUTPUT_VARIABLE USER_HOME)
+# elseif (WIN32)
+# execute_process(COMMAND cmd.exe /c "echo %USERPROFILE%" OUTPUT_VARIABLE USER_HOME)
+# string(REPLACE "\\" "/" USER_HOME ${USER_HOME})
+# endif ()
+# string(STRIP ${USER_HOME} USER_HOME)
+
+# set(CMAKE_INSTALL_PREFIX "${USER_HOME}") ### IMPORTANT ###
+# set(CMAKE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}") ### IMPORTANT ###
+# # ------------------------------------------------------------- #
 
 # Set names
 get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
@@ -7,6 +21,9 @@ set(MY_PROJECT_NAME ${DIR_NAME}) # project name
 set(MY_PROJECT_VERSION 1.2.3) # project version
 set(EXE_TARGET_NAME ${DIR_NAME})
 set(EXE_SOURCE_FILE_NAMES "main.cpp") ### add sources if any ###
+
+# install related
+set(MY_EXE_EXPORT_DIR ${CMAKE_INSTALL_PREFIX}/program/bin) ### CUSTOMIZE ###
 
 set(RUN_EXECUTABLE_POST_BUILD ON) # execute exe file after build
 
@@ -56,10 +73,11 @@ install(TARGETS ${EXE_TARGET_NAME} DESTINATION ${MY_EXE_EXPORT_DIR})
 
 # # supposing pybind11 is linked in sample_components' components
 # find_package(pybind11 REQUIRED)
-# -------------------- MAIN BUISINESS END -------------------- #
 
 # use in-project components: use "aggregate" to link all inside-project libraries
 target_link_libraries(${EXE_TARGET_NAME} PRIVATE aggregate)
 
-# # uncomment if use header-only headers
-# target_include_directories(${EXE_TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/header_only)
+# uncomment if use header-only headers
+target_include_directories(${EXE_TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/header_only)
+# -------------------- MAIN BUISINESS END -------------------- #
+

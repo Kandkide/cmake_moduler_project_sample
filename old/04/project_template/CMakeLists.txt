@@ -1,11 +1,7 @@
-# project top 1.2.0
+# components top 1.1.6
 cmake_minimum_required(VERSION 3.5...3.27)
 
-# Get the directory name
-get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
-project(${DIR_NAME})
-
-# ------------------ CUSTOMIZE (project level) ------------------ #
+# ------------------------------------------------------------- #
 # CMAKE_INSTALL_PREFIX and CMAKE_PREFIX_PATH are set to USER_HOME (common to all projects)
 if (UNIX)
 execute_process(COMMAND sh -c "echo $HOME" OUTPUT_VARIABLE USER_HOME)
@@ -14,33 +10,29 @@ execute_process(COMMAND cmd.exe /c "echo %USERPROFILE%" OUTPUT_VARIABLE USER_HOM
 string(REPLACE "\\" "/" USER_HOME ${USER_HOME})
 endif ()
 string(STRIP ${USER_HOME} USER_HOME)
+
 set(CMAKE_INSTALL_PREFIX "${USER_HOME}") ### IMPORTANT ###
 set(CMAKE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}") ### IMPORTANT ###
+# ------------------------------------------------------------- #
 
-# # header-only install prefixe
-# set(MY_HEADER_ONLY_INSTALL_PREFIX C:/msys64/ucrt64) ### IMPORTANT ###
+# Get the directory name
+get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
-# executables install directory
-set(MY_EXE_EXPORT_DIR ${CMAKE_INSTALL_PREFIX}/program/bin) ### IMPORTANT ###
+# ------------------ CUSTOMIZE ------------------ #
+project(${DIR_NAME})
 
-# exports json file (optional)
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(EXCLUDE_DIRS "build" "__pycache__") # Exclude specific subdirectories
 
-# deault to rood directory name
-set(MY_PACKAGE_NAME ${DIR_NAME}) 
-
-# used in place of ... in lib/..., include/..., and lib/cmake/...
-set(MY_INSTALL_SUBDIRECTORY_NAME ${MY_PACKAGE_NAME})
-# ------------------ CUSTOMIZE (local level) -------------- #
-
-# Exclude specific subdirectories
-set(EXCLUDE_DIRS "build" "__pycache__")
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # exports json file (optional)
+# ------------------ CUSTOMIZE END -------------- #
 
 # Set compiler flags
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O3")
+
+set(MY_PACKAGE_NAME ${DIR_NAME}) # affects MY_INSTALL_SUBDIRECTORY_NAME in compnents sub-project
 
 # Search and add all subdirectories within the directory
 file(GLOB SUBDIR_LIST RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *)
@@ -97,6 +89,8 @@ endforeach()
 # to install (per sub-project)
 # cmake --install .\build\components\
 # cmake --install .\build\applications\
-# cmake --install .\build\applications\sample_application\
 # cmake --install .\build\header_only\
 
+
+
+# DEPLECATE: To use header-only in sample_application: Uncomment lines in cmakelists.txt (one) and main.cpp (two)

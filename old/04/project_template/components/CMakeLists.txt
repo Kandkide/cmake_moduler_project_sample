@@ -1,5 +1,19 @@
-# components root 1.0.7
+# components root 1.0.6
 cmake_minimum_required(VERSION 3.5...3.27)
+
+# # ------------------------------------------------------------- #
+# # CMAKE_INSTALL_PREFIX and CMAKE_PREFIX_PATH are set to USER_HOME (common to all projects)
+# if (UNIX)
+# execute_process(COMMAND sh -c "echo $HOME" OUTPUT_VARIABLE USER_HOME)
+# elseif (WIN32)
+# execute_process(COMMAND cmd.exe /c "echo %USERPROFILE%" OUTPUT_VARIABLE USER_HOME)
+# string(REPLACE "\\" "/" USER_HOME ${USER_HOME})
+# endif ()
+# string(STRIP ${USER_HOME} USER_HOME)
+
+# set(CMAKE_INSTALL_PREFIX "${USER_HOME}") ### IMPORTANT ###
+# set(CMAKE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}") ### IMPORTANT ###
+# # ------------------------------------------------------------- #
 
 # Set names and other constants
 get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
