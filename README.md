@@ -1,5 +1,6 @@
 # cmake_moduler_project_sample
 A set of simple CMakeLists.txt templates for hierarchical projects.  
+Copy project_template directory and customize it for your use.  
 
 # Note
 1. CMAKE_INSTALL_PREFIX which is used for the install destination (except header-only) is set in root project CMakeLists.txt  
@@ -21,7 +22,7 @@ A set of simple CMakeLists.txt templates for hierarchical projects.
    target_link_libraries(some_target PRIVATE project_template::sample_component)  
 
 # for convenience: using aggregate
-1. By copying "sample_component", you can create multiple components (libraries) in a project  
+1. By copying "sample_component", you can create multiple components (libraries) in a project   
 2. Include these created libraries in aggregate/aggregate.hpp  
 3. Only a single line is necessary to include all those libraries:    
    target_link_libraries(some_target PRIVATE project_template::aggregate)  
@@ -34,17 +35,17 @@ A set of simple CMakeLists.txt templates for hierarchical projects.
 2. copy, rename, and modify it as you like.  
 3. Note:  
    Use library (component) name without package name for linking and including libraries.   
-   You can also use "aggregate" and "aggregate.hpp" if you have set it up already.  
+   You can also use "aggregate" and "aggregate.hpp" if you have set it up already.   
    Don't forget to always build in the root directory.  
 
 # create header-only headers: use header-only subdirectory
 1. see "sample_header_only" directory and files in it.  
 2. copy, rename, and modify it as you like.  
 3. Note: There is difference in including conventions.  
-   For example, assuming default setting, 
+   For example, assuming default setting,  
      #include "sample_header_only/sample_header_only.hpp"  
-     * preceding "sample_header_only/" part is needed even inside the project.
-4. Installation location is set separately for header-only (NOT by CMAKE_INSTALL_PREFIX). 
+     * preceding "sample_header_only/" part is needed even inside the project.  
+4. Installation location is set separately for header-only (NOT by CMAKE_INSTALL_PREFIX).  
    Set the MY_HEADER_ONLY_INSTALL_PREFIX variable in CMakeLists.txt in header-only directory.   
 
 # command lines
