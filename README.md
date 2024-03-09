@@ -43,17 +43,17 @@ Always build in the project root directory (project_template/)
 cmake -S . -B build  
 cmake --build build  
 
-## install components (libraries)
+## install components (libraries)  
 cmake --install .\build\components\  
 
-## install applications or an application
+## install applications or an application  
+(install all apps)  
 cmake --install .\build\applications\   
-* install all apps  
+(install sample_application only)  
 cmake --install .\build\applications\sample_application\  
-* install sample_application only  
 
-## run application
+## run application  
 cmake --build build --target run_sample_application  
-* assuming name of application is "sample_application"  
+- assuming name of application is "sample_application"  
 
 (as of 2024-03-10 00:54:52)
