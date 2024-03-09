@@ -47,13 +47,10 @@ cmake --build build
 cmake --install .\build\components\  
 
 ## install applications or an application  
-(install all apps)  
 cmake --install .\build\applications\   
-(install sample_application only)  
 cmake --install .\build\applications\sample_application\  
 
 ## run application  
 cmake --build build --target run_sample_application  
-- assuming name of application is "sample_application"  
 
 (as of 2024-03-10 00:54:52)
