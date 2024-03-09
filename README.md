@@ -8,11 +8,11 @@ A set of simple CMakeLists.txt templates for hierarchical projects.
 3. We use the word "component" interchangeably with "library" in the following description.  
 
 # minium usage
-1. Use only "components" subdirectory to create libraries.  
+1. Use "components" subdirectory to create libraries.  
    You can delete other subdirectories if you do not use them.  
 2. copy, rename, and modify "sample_component" subdirectory for creating your library  
-   * Also rename the .cpp and .hpp files to match the new directory name.   
-3. build and install (see below)  
+   Also rename the .cpp and .hpp files to match the new directory name.   
+3. build and install (see Command Line part below)  
 4. Find your package and link it in the other project's CMakeLists.txt.    
    your package name: = name of root directory (default: project_template)  
    your library name: = sample_component (or renamed directory name)  
@@ -40,12 +40,12 @@ A set of simple CMakeLists.txt templates for hierarchical projects.
 # create header-only headers: use header-only subdirectory
 1. see "sample_header_only" directory and files in it.  
 2. copy, rename, and modify it as you like.  
-3. Note: There is difference in including conventions. For example, assuming default setting, 
-   #include "sample_header_only/sample_header_only.hpp"  
-   * preceding "sample_header_only/" part is needed even inside the project.
-4. Installation location is set separately for header-only headers (NOT by CMAKE_INSTALL_PREFIX). 
-   Depending on your environment,  
-   Set the MY_HEADER_ONLY_INSTALL_PREFIX variable in CMakeLists.txt in header-only directory  
+3. Note: There is difference in including conventions.  
+   For example, assuming default setting, 
+     #include "sample_header_only/sample_header_only.hpp"  
+     * preceding "sample_header_only/" part is needed even inside the project.
+4. Installation location is set separately for header-only (NOT by CMAKE_INSTALL_PREFIX). 
+   Set the MY_HEADER_ONLY_INSTALL_PREFIX variable in CMakeLists.txt in header-only directory.   
 
 # command lines
 Must be conducted at the project root directory
