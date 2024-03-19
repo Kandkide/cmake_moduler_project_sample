@@ -6,10 +6,10 @@ get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 set(MY_PROJECT_NAME ${DIR_NAME}) # project name
 set(MY_PROJECT_VERSION 1.2.3) # project version
 set(EXE_TARGET_NAME ${DIR_NAME})
-set(EXE_SOURCE_FILE_NAMES "main.cpp") ### add sources if any ###
+set(EXE_SOURCE_FILE_NAMES "main.cpp" "cmakelists_copy_functions.cpp") ### add sources if any ###
 
 set(RUN_EXECUTABLE_POST_BUILD ON) # execute exe file after build
-set(COPY_EXECUTABLE_TO_PROJECT_ROOT off) # copy exe file after build
+set(COPY_EXECUTABLE_TO_PROJECT_ROOT ON) # copy exe file after build
 
 project(${MY_PROJECT_NAME} VERSION ${MY_PROJECT_VERSION} LANGUAGES CXX)
 

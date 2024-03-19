@@ -33,6 +33,9 @@
 
 # cmake
 *\build
+cmakelists_copy_data/
+cmakelists_copy.exe
+cmakelists_check.exe
 
 # .vscode/
 !.vscode/settings.json
