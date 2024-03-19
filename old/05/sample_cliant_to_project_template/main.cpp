@@ -9,6 +9,7 @@
 #include <project_template/aggregate.hpp>
 
 int main(){
-    std::cout << "Hello from use_case_of_project_template\nrun sample_component():\n";
+    std::cout << "Hello from use_case_of_project_template\nrun sample_component() and sample_header_only<999>():\n";
     sample_component();
+    sample_header_only<999>();
 }

@@ -1,4 +1,4 @@
-# project.top-1.2.3
+# project top 1.2.0
 cmake_minimum_required(VERSION 3.5...3.27)
 
 # Get the directory name
@@ -17,8 +17,7 @@ string(STRIP ${USER_HOME} USER_HOME)
 set(CMAKE_INSTALL_PREFIX "${USER_HOME}") ### IMPORTANT ###
 set(CMAKE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}") ### IMPORTANT ###
 
-# header-only install prefixe
-set(MY_HEADER_ONLY_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}) ### IMPORTANT ###
+# # header-only install prefixe
 # set(MY_HEADER_ONLY_INSTALL_PREFIX C:/msys64/ucrt64) ### IMPORTANT ###
 
 # executables install directory
@@ -35,7 +34,7 @@ set(MY_INSTALL_SUBDIRECTORY_NAME ${MY_PACKAGE_NAME})
 # ------------------ CUSTOMIZE (local level) -------------- #
 
 # Exclude specific subdirectories
-set(EXCLUDE_DIRS "build" "__pycache__" "cmakelists_copy_data")
+set(EXCLUDE_DIRS "build" "__pycache__")
 
 # Set compiler flags
 set(CMAKE_CXX_STANDARD 23)

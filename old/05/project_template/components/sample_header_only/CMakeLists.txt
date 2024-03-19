@@ -1,4 +1,4 @@
-# components.leaf-1.2.3
+# components leaf 1.2.2
 # Set names
 get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 set(LIB_TARGET_NAME ${DIR_NAME}) # Library name

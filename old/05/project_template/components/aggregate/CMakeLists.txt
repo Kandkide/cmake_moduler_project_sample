@@ -1,5 +1,4 @@
-# components.aggregate.leaf-1.2.0
-# DERIVED FROM components leaf (at 1.1.3)
+# components/aggregate leaf 1.1.8 DERIVED FROM components leaf (at 1.1.3)
 # Set names
 get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 set(LIB_TARGET_NAME ${DIR_NAME}) # Library name

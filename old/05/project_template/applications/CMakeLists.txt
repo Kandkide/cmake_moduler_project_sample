@@ -1,4 +1,4 @@
-# inbetween-1.0.5
+# inbetween 1.0.3
 # in directories without source files (guide from upper to lower directories in the project)
 cmake_minimum_required(VERSION 3.5...3.27)
 

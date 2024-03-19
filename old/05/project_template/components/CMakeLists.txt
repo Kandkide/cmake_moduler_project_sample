@@ -1,4 +1,4 @@
-# components.root-1.0.8
+# components root 1.0.7
 cmake_minimum_required(VERSION 3.5...3.27)
 
 # Set names and other constants

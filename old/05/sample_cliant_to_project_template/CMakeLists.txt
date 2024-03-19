@@ -1,4 +1,4 @@
-# single folder application 1.1.9
+# single folder application 1.1.8
 cmake_minimum_required(VERSION 3.5...3.27)
 
 # ------------------------------------------------------------- #
@@ -67,41 +67,20 @@ install(TARGETS ${EXE_TARGET_NAME} DESTINATION ${MY_EXE_EXPORT_DIR})
 # -------------------- MAIN BUISINESS -------------------- #
 # # Qt 6を使用する場合 (if Qt6 is linked in including library, find_package is enough in this place)
 # find_package(Qt6 COMPONENTS Widgets REQUIRED)
-# # target_link_libraries(${EXE_TARGET_NAME} PUBLIC Qt6::Widgets)  # append "Qt6::Widgets" to MY_LINK_ITEMS_LIST instead
+# target_link_libraries(${LIB_TARGET_NAME} PUBLIC Qt6::Widgets)
 
-# # Find the installed sample_components package and link it with the executable
-# find_package(sample_components REQUIRED)
-# # target_link_libraries(${EXE_TARGET_NAME} PRIVATE sample_components::component1) # append "sample_components::component1"
+# Find the installed sample_components package and link it with the executable
 find_package(project_template REQUIRED)
+target_link_libraries(${EXE_TARGET_NAME} PRIVATE project_template::aggregate)
+# target_link_libraries(${EXE_TARGET_NAME} PRIVATE sample_components::component2)
 
 # # supposing pybind11 is linked in sample_components' components
 # find_package(pybind11 REQUIRED)
 
-# append items to MY_LINK_ITEMS_LIST if necessary
-set(MY_LINK_ITEMS_LIST "project_template::aggregate") # append here: "Qt6::Widgets" etc.
-# -------------------- MAIN BUISINESS END -------------------- #
-
-target_link_libraries(${EXE_TARGET_NAME} PRIVATE ${MY_LINK_ITEMS_LIST})
+# use in-project components: use "aggregate" to link all inside-project libraries
+# target_link_libraries(${EXE_TARGET_NAME} PRIVATE aggregate)
 
 # # uncomment if use header-only headers
 # target_include_directories(${EXE_TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/header_only)
-
-
-# --- EXTRE: alternative executables related --- #
-# MY_LINK_ITEMS_LIST is used inside. so it must be set beforehand. (CODE ORDER MATTERS)
-
-file(GLOB SOURCES "alt*.cpp")
-
-foreach(SOURCE_FILE ${SOURCES})
-    get_filename_component(EXE_NAME ${SOURCE_FILE} NAME_WE)
-    set(EXE_NAME ${EXE_TARGET_NAME}_${EXE_NAME})
-    add_executable(${EXE_NAME} ${SOURCE_FILE})
-    target_link_libraries(${EXE_NAME} PRIVATE ${MY_LINK_ITEMS_LIST})
-
-    add_custom_command(TARGET ${EXE_NAME}
-                       POST_BUILD
-                       COMMAND ${CMAKE_COMMAND} -E echo "Running ${EXE_NAME}..."
-                       COMMAND $<TARGET_FILE:${EXE_NAME}>
-                       WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
-endforeach()
+# -------------------- MAIN BUISINESS END -------------------- #
 
