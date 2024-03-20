@@ -27,18 +27,18 @@ Copy project_template directory and customize it for your use.
 
 ## "project_template" Directory structure
 
-project_template/
-├── applications/
+project_template/  
+├── applications/  
 │   ├── sample_application/  ***1**     
-│   └── ...
-├── components/
-│   ├── aggregate/
+│   └── ...  
+├── components/  
+│   ├── aggregate/  
 │   ├── sample_component/  ***2**   
-│   └── ...
-├── header_only/
+│   └── ...  
+├── header_only/  
 │   ├── previous_works/  ***3**    
-│   └── ...
-└── ...
+│   └── ...  
+└── ...  
   
 ***1** copy and modify to make **executables**  
 ***2** copy and modify to make **libraries**  
