@@ -25,28 +25,6 @@ Copy project_template directory and customize it for your use.
 * As for header-only, one more subdirectory is made (using source directory name)  
 
 
-## "project_template" Directory structure
-
-project_template/  
-├── applications/  
-│   ├── sample_application/  ***1**     
-│   └── ...  
-├── components/  
-│   ├── aggregate/  
-│   ├── sample_component/  ***2**   
-│   └── ...  
-├── header_only/  
-│   ├── previous_works/  ***3**    
-│   └── ...  
-└── ...  
-  
-***1** copy and modify to make **executables**  
-***2** copy and modify to make **libraries**  
-***3** copy and modify to make **header-only** headers   
-* Only relevant parts are shown.  
-* CMakeLists.txt are located in all directories.  
-
-
 # Customize install destination
 (In CMakeLists.txt in project_template directory)  
 Default settings for components, executables, and header-only are defined as follows.  
@@ -98,6 +76,29 @@ Default settings for components, executables, and header-only are defined as fol
 * Still, there are two merits of locating header-only libraries inside the project:  
 * (1) enables to install header-only libraries as a set.  
 * (2) using them inside the project without installing them.  
+
+
+## "project_template" Directory structure
+
+project_template/  
+├── applications/  
+│   ├── sample_application/  ***1**     
+│   └── ...  
+├── components/  
+│   ├── aggregate/  
+│   ├── sample_component/  ***2**   
+│   └── ...  
+├── header_only/  
+│   ├── previous_works/  ***3**    
+│   └── ...  
+└── ...  
+  
+***1** copy and modify to make **executables**  
+***2** copy and modify to make **libraries**  
+***3** copy and modify to make **header-only** headers   
+* Only relevant parts are shown.  
+* CMakeLists.txt are located in all directories.  
+
 
 # Other convenient commands
 1. install a single application:   
