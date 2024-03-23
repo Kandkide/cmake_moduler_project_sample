@@ -1,29 +1,15 @@
-# applications.bottom-1.3.2
+# applications.bottom-1.2.9
 cmake_minimum_required(VERSION 3.5...3.27)
 
 # Set names
 get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 set(MY_PROJECT_NAME ${DIR_NAME}) # project name
+set(MY_PROJECT_VERSION 1.2.3) # project version
 set(EXE_TARGET_NAME ${DIR_NAME})
+set(EXE_SOURCE_FILE_NAMES "main.cpp") ### add sources if any ###
 
-
-# --- reading from SettingAppsBottom.cmake if it exists else define here --- #
-if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/SettingAppsBottom.cmake")
-    include(SettingAppsBottom.cmake)
-else()
-    set(MY_PROJECT_VERSION 1.2.3) # project version
-    set(EXE_SOURCE_FILE_NAMES "main.cpp") ### add sources if any ###
-    set(RUN_EXECUTABLE_POST_BUILD ON) # execute exe file after build
-    set(COPY_EXECUTABLE_TO_PROJECT_ROOT off) # copy exe file after build
-    set(MY_LINK_ITEMS_LIST "")
-endif()
-# ------ #
-
-# Only when aggregate directory exist, append aggregate to link lists
-find_path(AGGREGATE_DIR aggregate PATHS ${CMAKE_SOURCE_DIR}/components)
-if(AGGREGATE_DIR)
-    set(MY_LINK_ITEMS_LIST ${MY_LINK_ITEMS_LIST} "aggregate")
-endif()
+set(RUN_EXECUTABLE_POST_BUILD ON) # execute exe file after build
+set(COPY_EXECUTABLE_TO_PROJECT_ROOT off) # copy exe file after build
 
 project(${MY_PROJECT_NAME} VERSION ${MY_PROJECT_VERSION} LANGUAGES CXX)
 
@@ -67,7 +53,23 @@ add_custom_target(run_${EXE_TARGET_NAME}
 # Install the executable to the specified directory
 install(TARGETS ${EXE_TARGET_NAME} DESTINATION ${MY_EXE_EXPORT_DIR})
 
-# # -------------------- HERE IS THE RUIN OF MAIN BUISINESS -------------------- #
+
+# -------------------- MAIN BUISINESS -------------------- #
+# # Qt 6を使用する場合 (if Qt6 is linked in including library, find_package is enough in this place)
+# find_package(Qt6 COMPONENTS Widgets REQUIRED)
+# # target_link_libraries(${EXE_TARGET_NAME} PUBLIC Qt6::Widgets)  # append "Qt6::Widgets" to MY_LINK_ITEMS_LIST instead
+
+# # Find the installed sample_components package and link it with the executable
+# find_package(sample_components REQUIRED)
+# # target_link_libraries(${EXE_TARGET_NAME} PRIVATE sample_components::component1) # append "sample_components::component1"
+# # target_link_libraries(${EXE_TARGET_NAME} PRIVATE sample_components::component2)
+
+# # supposing pybind11 is linked in sample_components' components
+# find_package(pybind11 REQUIRED)
+
+# append items to MY_LINK_ITEMS_LIST if necessary
+set(MY_LINK_ITEMS_LIST "aggregate") # append here: "Qt6::Widgets" "sample_components::component1"
+# -------------------- MAIN BUISINESS END -------------------- #
 
 target_link_libraries(${EXE_TARGET_NAME} PRIVATE ${MY_LINK_ITEMS_LIST})
 

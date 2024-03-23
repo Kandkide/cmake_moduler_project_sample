@@ -1,4 +1,4 @@
-# components.leaf-1.2.5
+# components.leaf-1.2.3
 # Set names
 get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 set(LIB_TARGET_NAME ${DIR_NAME}) # Library name
@@ -57,12 +57,25 @@ else()
 endif()
 
 
-# --- reading from SettingComponentsLeaf.cmake if it exists else define here --- #
-if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/SettingComponentsLeaf.cmake")
-    include(SettingComponentsLeaf.cmake)
-else()
-    set(MY_LINK_ITEMS_LIST "")
-endif()
-# ------ #
 
-target_link_libraries(${LIB_TARGET_NAME} PRIVATE ${MY_LINK_ITEMS_LIST})
+# -------------------- CONTROL INCLUDE AND LINK -------------------- #
+
+# --- LINK AND INCLUDE --- #
+
+# # pybind11: find, Include, and link with ${LIB_TARGET_NAME}
+# find_package(pybind11 REQUIRED)
+# target_link_libraries(${LIB_TARGET_NAME} PUBLIC pybind11::embed)
+# # target_include_directories(${LIB_TARGET_NAME} PUBLIC ${pybind11_INCLUDE_DIR})
+
+# # Qt 6を使用する場合
+# find_package(Qt6 COMPONENTS Widgets REQUIRED)
+# target_link_libraries(${LIB_TARGET_NAME} PUBLIC Qt6::Widgets)
+
+# # Link the executable with the required libraries (windows platform)
+# target_link_libraries(${LIB_TARGET_NAME} PRIVATE comdlg32 ole32)
+
+# # component1に依存する場合（component1は同一プロジェクト内にあるとする）
+# target_link_libraries(${LIB_TARGET_NAME} PRIVATE component1)
+
+# -------------------- CONTROL INCLUDE AND LINK END -------------------- #
+

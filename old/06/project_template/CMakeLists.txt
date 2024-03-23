@@ -34,10 +34,6 @@ set(MY_PACKAGE_NAME ${DIR_NAME})
 set(MY_INSTALL_SUBDIRECTORY_NAME ${MY_PACKAGE_NAME})
 # ------------------ CUSTOMIZE (local level) -------------- #
 
-# # used in sub-projects
-# find_path(AGGREGATE_DIR aggregate PATHS ${CMAKE_SOURCE_DIR}/components)
-# message(${AGGREGATE_DIR})
-
 # Exclude specific subdirectories
 set(EXCLUDE_DIRS "build" "__pycache__" "cmakelists_copy_data")
 
