@@ -42,37 +42,41 @@ Default settings for components, executables, and header-only are defined as fol
 1. Copy, rename, and modify **"sample_component" subdirectory** for creating your library  
 2. Rename the .cpp and .hpp files to match the new directory name.  
 
-
-# To create libraries.  
+# To create executables (applications).  
 1. Copy, rename, and modify **"sample_application" subdirectory** for creating executables 
-2. Use library (component) name without package name for linking and including libraries. 
+2. Change values of variables in **SettingAppsBottom.cmake** if necessary.  
 
+# Link other libraries (common to above two)  
+1. **find_package(package_name)** in **SettingComponentsLeaf.cmake** or **SettingAppsBottom.cmake**.  
+2. And append **"package_name::library_name"** to **MY_LINK_ITEMS_LIST** in SettingComponentsLeaf.cmake (or SettingAppsBottom.cmake).  
+* If it is inside the project, no need to find_package, and just append library_name to **MY_LINK_ITEMS_LIST** without package_name.  
+* Even this is not necessary in case of executables if you aggregate libraries (following next item).  
 
-# For convenience: components/aggregate.hpp
-1. You can create multiple components (libraries) in a project   
-2. Include these created library headers in **aggregate/aggregate.hpp**  
-3. To link to "aggregate" is to link all those libraries.
-4. Usage in relevant CMakeLists.txt:   
-         **find_package(project_template REQUIRED)**   
-         **target_link_libraries(some_target PRIVATE project_template::aggregate)**   
-5. Usage in relevant source file:   
-       **#include <project_template/aggregate.hpp>** 
+# For convenience: components/aggregate/aggregate.hpp
+1. After creating new components (libraries), execute **set_aggregate.exe** in the project root directory.  
+2. It automatically include the new library header in **aggregate/aggregate.hpp**  
+3. Then, aggregated libraries automatically linked to inside-project executables.  
+* If you do not need this, just delete aggregate sub-directory.  
+* But you have to append library name to **MY_LINK_ITEMS_LIST** in **SettingAppsBottom.cmake** manually.  
 
-* see "sample_cliant_to_project_template" directory as an example
+# Utilize libraries from outside-project after installation  
+1. In relevant CMakeLists.txt:    
+       **find_package(project_template REQUIRED)**   
+       **target_link_libraries(some_target PRIVATE project_template::aggregate)**   
+2. In relevant source file:   
+       **#include <project_template/aggregate.hpp>**  
 
-## Note to above: in case of inside the same project  
-6. No need of find_package(project_template REQUIRED) and project name, i.e.,  
-       **target_link_libraries(some_target PRIVATE aggregate)**
-
-7. No need of project name, i.e., 
-       **#include <aggregate.hpp>**  
+# Utilize libraries inside the project  
+1. Usage in relevant source file:  
+       **#include <aggregate.hpp>**   
+* In case of components, you need to append **"aggregate"** to **MY_LINK_ITEMS_LIST** in **SettingComponentsLeaf.cmake**  
 
 # Locate header-only libraries (optional).  
 1. Copy and/or rename **"previous_works"** subdirectory for adding header-only libraries.  
 2. Multiple header files can be put in a single directory.  
 3. The name of this directory is used as the name of installing subdirectory.   
 
-* I say this is optional, since header-only libraries are easy to handle even if they are outside the project.  
+* It is optional, since header-only libraries are easy to handle even if they are outside the project.  
 * Still, there are two merits of locating header-only libraries inside the project:  
 * (1) enables to install header-only libraries as a set.  
 * (2) using them inside the project without installing them.  
@@ -107,4 +111,4 @@ project_template/
 2. run application:   
 **cmake --build build --target run_sample_application**  
 
-(as of 2024-03-20 16:11:10)
+(as of 2024-03-24 03:56:41)
