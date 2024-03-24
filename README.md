@@ -1,31 +1,35 @@
 # cmake_moduler_project_sample
 A set of simple CMakeLists.txt templates for hierarchical projects.  
 Copy project_template directory and customize it for your use.  
-* We use the word **"component"** interchangeably with **"library"** in the following description.  
+* We use the word **"component"** interchangeably with **"library"** in the following description. 
+* The same goes for **"applications"** with **"executables"**.  
 
 # Usage in brief
-1. Move to "project_template/" directory  
+1. Copy **"project_template/"** directory, **rename** it and move to its root directory.  
+(The name of this directory becomes your **project name**.)   
    
-2. Build:  
+2. Create components and applications (see following items below).  
+
+3. Build:  
 **cmake -S . -B build**   
 **cmake --build build**  
   
-3. Install libraries:  
+4. Install libraries:  
 **cmake --install .\build\components**\   
   
-4. Install executables:  
+5. Install executables:  
 **cmake --install .\build\applications**\  
   
-5. Install header-only:  
+6. Install header-only:  
 **cmake --install .\build\header_only**\  
   
 ## Note
 * Default install destination is **user home directory**  
 * (files are installed to its subdirectories, **lib/, include/, lib/cmake/,** and **program/bin/**, depending on file type.)  
-* As for header-only, one more subdirectory is made (using source directory name)  
+* As for header-only, one more layer of subdirectory is made (using source directory name)  
+* For customizing destination, see the last item below.  
 
-
-## "project_template" Directory structure
+## Directory structure
 
 project_template/  
 ├── applications/  
@@ -40,64 +44,57 @@ project_template/
 │   └── ...  
 └── ...  
   
-***1** copy and modify to make **executables**  
-***2** copy and modify to make **libraries**  
-***3** copy and modify to make **header-only** headers   
-* Only relevant parts are shown.  
-* CMakeLists.txt are located in all directories.  
+***1** copy and modify it to make **executables**  
+***2** copy and modify it to make **libraries**  
+***3** copy and modify it to make **header-only** headers   
 
 
-# Customize install destination
-(In CMakeLists.txt in project_template directory)  
-Default settings for components, executables, and header-only are defined as follows.  
-  
-**set(CMAKE_INSTALL_PREFIX "${USER_HOME}")**   
-  
-**set(MY_EXE_EXPORT_DIR ${CMAKE_INSTALL_PREFIX}/program/bin)**  
-  
-**set(MY_HEADER_ONLY_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})**  
-  
-* Set the above three variables according to your project.  
-
-
-# To create libraries.  
+## To create libraries (components).  
 1. Copy, rename, and modify **"sample_component" subdirectory** for creating your library  
 2. Rename the .cpp and .hpp files to match the new directory name.  
+* **The name of the directory** becomes **library name**.  
+
+## To create executables (applications).  
+1. Copy, rename, and modify **"sample_application" subdirectory** for creating executables  
+2. Change values of variables in **SettingAppsBottom.cmake** if necessary.  
+* **The name of the directory** becomes **name of the executable**.  
+
+## Link outside-project libraries  
+In **SettingComponentsLeaf.cmake** or **SettingAppsBottom.cmake**.  
+1. **find_package(package_name)**  
+2. Append **"package_name::library_name"** to **MY_LINK_ITEMS_LIST**.  
+
+## Link inside-project libraries
+1. Append **library_name** to **MY_LINK_ITEMS_LIST** without package_name.  
+2. **In case of creating executables**, no need to append library_name, **if you aggregate libraries**. (see next item)   
+
+## Aggregate libraries
+1. After creating your new components (libraries), execute **set_aggregate.exe** in the project root directory.  
+2. It automatically include the new library header in **components/aggregate/aggregate.hpp**  
+* Use directive **#include <aggregate.hpp>** from inside the project.  
+* Also use **#include <package_name/aggregate.hpp>** from outside the project.  
+
+## Disable aggregate
+1. Delete components/aggregate/ directory.  
+* In this case, you have to append library_name to **MY_LINK_ITEMS_LIST** in **SettingAppsBottom.cmake** explicitly.  
+
+## Utilize libraries from outside the project after installation  
+1. In relevant CMakeLists.txt:    
+       **find_package(package_name REQUIRED)**   
+       **target_link_libraries(some_target PRIVATE package_name::aggregate)**   
+* or use individual library name instead of "aggregate".  
 
 
-# To create libraries.  
-1. Copy, rename, and modify **"sample_application" subdirectory** for creating executables 
-2. Use library (component) name without package name for linking and including libraries. 
-
-
-# For convenience: components/aggregate.hpp
-1. You can create multiple components (libraries) in a project   
-2. Include these created library headers in **aggregate/aggregate.hpp**  
-3. To link to "aggregate" is to link all those libraries.
-4. Usage in relevant CMakeLists.txt:   
-         **find_package(project_template REQUIRED)**   
-         **target_link_libraries(some_target PRIVATE project_template::aggregate)**   
-5. Usage in relevant source file:   
-       **#include <project_template/aggregate.hpp>** 
-
-* see "sample_cliant_to_project_template" directory as an example
-
-## Note to above: in case of inside the same project  
-6. No need of find_package(project_template REQUIRED) and project name, i.e.,  
-       **target_link_libraries(some_target PRIVATE aggregate)**
-
-7. No need of project name, i.e., 
-       **#include <aggregate.hpp>**  
-
-# Locate header-only libraries (optional).  
+## Locate header-only libraries (optional).  
 1. Copy and/or rename **"previous_works"** subdirectory for adding header-only libraries.  
 2. Multiple header files can be put in a single directory.  
 3. The name of this directory is used as the name of installing subdirectory.   
 
-* I say this is optional, since header-only libraries are easy to handle even if they are outside the project.  
+* It is optional, since header-only libraries are easy to handle even if they are outside the project.  
 * Still, there are two merits of locating header-only libraries inside the project:  
 * (1) enables to install header-only libraries as a set.  
 * (2) using them inside the project without installing them.  
+
 
 # Other convenient commands
 1. install a single application:   
@@ -106,4 +103,17 @@ Default settings for components, executables, and header-only are defined as fol
 2. run application:   
 **cmake --build build --target run_sample_application**  
 
-(as of 2024-03-20 16:11:10)
+
+# Customize install destination
+In CMakeLists.txt **in project root directory**.   
+Modify following three variables according to your project.  
+  
+**set(CMAKE_INSTALL_PREFIX "${USER_HOME}")**   
+  
+**set(MY_EXE_EXPORT_DIR ${CMAKE_INSTALL_PREFIX}/program/bin)**  
+  
+**set(MY_HEADER_ONLY_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})**  
+  
+* They determine install destination of components, executables, and header-only, respectively.
+
+(as of 2024-03-24 14:01:12)
