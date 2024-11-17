@@ -27,7 +27,7 @@ Copy project_template directory and customize it for your use.
 * Default install destination is **user home directory**  
 * (files are installed to its subdirectories, **lib/, include/, lib/cmake/,** and **program/bin/**, depending on file type.)  
 * As for header-only, one more layer of subdirectory is made (using source directory name)  
-* For customizing destination, see the last item below.  
+* For customizing destination, **see the last item below**.  
 
 ## Directory structure
 

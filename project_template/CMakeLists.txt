@@ -27,7 +27,7 @@ set(MY_EXE_EXPORT_DIR ${CMAKE_INSTALL_PREFIX}/program/bin) ### IMPORTANT ###
 # exports json file (optional)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# deault to rood directory name
+# deault to root directory name
 set(MY_PACKAGE_NAME ${DIR_NAME}) 
 
 # used in place of ... in lib/..., include/..., and lib/cmake/...

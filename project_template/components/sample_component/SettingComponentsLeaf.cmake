@@ -1,4 +1,6 @@
-# components.leaf.SettingComponentsLeaf-1.2.5
+# components.leaf.SettingComponentsLeaf-1.2.6
+
+set(OTHER_SOURCE_FILE_NAMES "parts_of_component.cpp") ### add sources if any ###
 
 # -------------------- CONTROL INCLUDE AND LINK -------------------- #
 
