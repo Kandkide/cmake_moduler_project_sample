@@ -22,7 +22,13 @@ Copy project_template directory and customize it for your use.
   
 6. Install header-only:  
 **cmake --install .\build\header_only**\  
-  
+
+7. install executable from a single application:   
+**cmake --install .\build\applications\sample_application**\  
+
+8. run application:   
+**cmake --build build --target run_sample_application**  
+
 ## Note
 * Default install destination is **user home directory**  
 * (files are installed to its subdirectories, **lib/, include/, lib/cmake/,** and **program/bin/**, depending on file type.)  
@@ -81,15 +87,6 @@ In **SettingComponentsLeaf.cmake** or **SettingAppsBottom.cmake**.
 * (1) enables to install header-only libraries as a set.  
 * (2) using them inside the project without installing them.  
 
-
-# Other convenient commands
-1. install a single application:   
-**cmake --install .\build\applications\sample_application**\  
-
-2. run application:   
-**cmake --build build --target run_sample_application**  
-
-
 # Customize install destination
 In CMakeLists.txt **in project root directory**.   
 Modify following three variables according to your project.  
@@ -102,4 +99,4 @@ Modify following three variables according to your project.
   
 * They determine install destination of components, executables, and header-only, respectively.
 
-(as of 2024-03-24 14:01:12)
+(as of 2024-11-18 00:22:21)
