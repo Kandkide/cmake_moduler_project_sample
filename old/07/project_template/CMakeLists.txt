@@ -1,4 +1,4 @@
-# project.top-1.2.4
+# project.top-1.2.3
 cmake_minimum_required(VERSION 3.5...3.27)
 
 # Get the directory name
@@ -58,6 +58,7 @@ foreach(SUBDIR IN LISTS SUBDIR_LIST)
 endforeach()
 
 # Important
+## DO NOT rename "aggregate" directory.
 ## DO NOT rename "header_only" directory if you use header-only libraries.
 
 # THREE growth points: "sample_application", "sample_component", and "sample_header_only" directories.
@@ -75,6 +76,12 @@ endforeach()
 ## inside: target_link_libraries(${EXE_TARGET_NAME} PRIVATE my_component)
 ## outside(1): find_package(package_name REQUIRED)
 ## outside(2): target_link_libraries(${EXE_TARGET_NAME} PRIVATE package_name::my_component)
+
+#You can do it IN AGGREGATE,
+## First, include all your components (libraries) in aggregate/aggregate.hpp. Then,
+## inside project: #include "aggregate.hpp"
+## outside project: #include <package_name/aggregate.hpp>
+## ALSO: target_link_libraries in client cmakelists.txt (see above: replacing "my_componet" to "aggregate")
 
 # header-only header must be specified with its directory name.
 ## for example, if my_header.hpp is in sample_header_only directory, you have to specify it as

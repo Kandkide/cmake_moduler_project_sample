@@ -36,6 +36,7 @@ project_template/
 │   ├── sample_application/  ***1**     
 │   └── ...  
 ├── components/  
+│   ├── aggregate/  
 │   ├── sample_component/  ***2**   
 │   └── ...  
 ├── header_only/  
@@ -65,11 +66,24 @@ In **SettingComponentsLeaf.cmake** or **SettingAppsBottom.cmake**.
 
 ## Link inside-project libraries
 1. Append **library_name** to **MY_LINK_ITEMS_LIST** without package_name.  
+2. **In case of creating executables**, no need to append library_name, **if you aggregate libraries**. (see next item)   
+
+## Aggregate libraries
+1. After creating your new components (libraries), execute **set_aggregate.exe** in the project root directory.  
+2. It automatically include the new library header in **components/aggregate/aggregate.hpp**  
+* Use directive **#include <aggregate.hpp>** from inside the project.  
+* Also use **#include <package_name/aggregate.hpp>** from outside the project.  
+
+## Disable aggregate
+1. Delete components/aggregate/ directory.  
+* In this case, you have to append library_name to **MY_LINK_ITEMS_LIST** in **SettingAppsBottom.cmake** explicitly.  
 
 ## Utilize libraries from outside the project after installation  
 1. In relevant CMakeLists.txt:    
        **find_package(package_name REQUIRED)**   
-       **target_link_libraries(some_target PRIVATE package_name::sample_component)**   
+       **target_link_libraries(some_target PRIVATE package_name::aggregate)**   
+* or use individual library name instead of "aggregate".  
+
 
 ## Locate header-only libraries (optional).  
 1. Copy and/or rename **"previous_works"** subdirectory for adding header-only libraries.  

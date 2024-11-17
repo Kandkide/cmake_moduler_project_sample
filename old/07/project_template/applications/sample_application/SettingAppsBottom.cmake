@@ -36,5 +36,5 @@ set(COPY_EXECUTABLE_TO_PROJECT_ROOT off) # copy exe file after build
 # # target_link_libraries(${EXE_TARGET_NAME} PRIVATE PkgConfig::LIBAV) # append "PkgConfig::LIBAV" to MY_LINK_ITEMS_LIST instead
 
 # append items to MY_LINK_ITEMS_LIST if necessary
-set(MY_LINK_ITEMS_LIST "sample_component") # append here: "Qt6::Widgets" "pybind11::embed" ${OpenCV_LIBS} "PkgConfig::LIBAV" etc.
+set(MY_LINK_ITEMS_LIST "") # append here: "Qt6::Widgets" "pybind11::embed" ${OpenCV_LIBS} "PkgConfig::LIBAV" etc.
 # -------------------- MAIN BUISINESS END -------------------- #

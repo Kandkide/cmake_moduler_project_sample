@@ -1,4 +1,4 @@
-# applications.bottom-1.3.3
+# applications.bottom-1.3.2
 cmake_minimum_required(VERSION 3.5...3.27)
 
 # Set names
@@ -19,11 +19,11 @@ else()
 endif()
 # ------ #
 
-# # Only when aggregate directory exist, append aggregate to link lists
-# find_path(AGGREGATE_DIR aggregate PATHS ${CMAKE_SOURCE_DIR}/components)
-# if(AGGREGATE_DIR)
-#     set(MY_LINK_ITEMS_LIST ${MY_LINK_ITEMS_LIST} "aggregate")
-# endif()
+# Only when aggregate directory exist, append aggregate to link lists
+find_path(AGGREGATE_DIR aggregate PATHS ${CMAKE_SOURCE_DIR}/components)
+if(AGGREGATE_DIR)
+    set(MY_LINK_ITEMS_LIST ${MY_LINK_ITEMS_LIST} "aggregate")
+endif()
 
 project(${MY_PROJECT_NAME} VERSION ${MY_PROJECT_VERSION} LANGUAGES CXX)
 

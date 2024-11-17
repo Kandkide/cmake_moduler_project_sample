@@ -1,4 +1,4 @@
-# components.leaf-1.2.6
+# components.leaf-1.2.5
 # Set names
 get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 set(LIB_TARGET_NAME ${DIR_NAME}) # Library name
@@ -66,5 +66,3 @@ endif()
 # ------ #
 
 target_link_libraries(${LIB_TARGET_NAME} PRIVATE ${MY_LINK_ITEMS_LIST})
-
-target_include_directories(${LIB_TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/header_only)
