@@ -51,4 +51,5 @@ cmakelists_check.exe
 # GPG（GNU Privacy Guard）に関連する設定
 .gnupg/
 
+#
 *.bash_history
