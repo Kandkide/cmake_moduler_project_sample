@@ -1,3 +1,14 @@
+# .vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+*.code-workspace
+.vscode-server/
+.cache/
+.dotnet/
+
 # Prerequisites
 *.d
 
@@ -37,11 +48,7 @@ cmakelists_copy_data/
 cmakelists_copy.exe
 cmakelists_check.exe
 
-# .vscode/
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/*.code-snippets
-*.code-workspace
-.vscode/
+# GPG（GNU Privacy Guard）に関連する設定
+.gnupg/
+
+*.bash_history
