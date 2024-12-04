@@ -53,3 +53,13 @@ cmakelists_check.exe
 
 #
 *.bash_history
+
+# pipx install here
+.local/
+
+
+# why followings are not working?
+.onCreateCommandMarker
+.postCreateCommandMarker
+.postStartCommandMarker
+.updateContentCommandMarker
