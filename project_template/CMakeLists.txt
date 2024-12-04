@@ -1,4 +1,4 @@
-# project.top-1.2.4
+# project.top-1.2.5
 cmake_minimum_required(VERSION 3.5...3.27)
 
 # Get the directory name
@@ -8,21 +8,25 @@ project(${DIR_NAME})
 # ------------------ CUSTOMIZE (project level) ------------------ #
 # CMAKE_INSTALL_PREFIX and CMAKE_PREFIX_PATH are set to USER_HOME (common to all projects)
 if (UNIX)
-execute_process(COMMAND sh -c "echo $HOME" OUTPUT_VARIABLE USER_HOME)
-elseif (WIN32)
-execute_process(COMMAND cmd.exe /c "echo %USERPROFILE%" OUTPUT_VARIABLE USER_HOME)
-string(REPLACE "\\" "/" USER_HOME ${USER_HOME})
-endif ()
-string(STRIP ${USER_HOME} USER_HOME)
-set(CMAKE_INSTALL_PREFIX "${USER_HOME}") ### IMPORTANT ###
-set(CMAKE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}") ### IMPORTANT ###
+    # Set default install directory to /usr/local for UNIX systems
+    set(CMAKE_INSTALL_PREFIX "/usr/local")
+    set(CMAKE_PREFIX_PATH "/usr/local")
+    # executables install directory
+    set(MY_EXE_EXPORT_DIR ${CMAKE_INSTALL_PREFIX}/bin) ### IMPORTANT ###
+else()
+    # For Windows, fallback to user's home directory
+    execute_process(COMMAND cmd.exe /c "echo %USERPROFILE%" OUTPUT_VARIABLE USER_HOME)
+    string(REPLACE "\\" "/" USER_HOME ${USER_HOME})
+    string(STRIP ${USER_HOME} USER_HOME)
+    set(CMAKE_INSTALL_PREFIX "${USER_HOME}")
+    set(CMAKE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}")
+    # executables install directory
+    set(MY_EXE_EXPORT_DIR ${CMAKE_INSTALL_PREFIX}/program/bin) ### IMPORTANT ###
+endif()
 
 # header-only install prefixe
 set(MY_HEADER_ONLY_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}) ### IMPORTANT ###
 # set(MY_HEADER_ONLY_INSTALL_PREFIX C:/msys64/ucrt64) ### IMPORTANT ###
-
-# executables install directory
-set(MY_EXE_EXPORT_DIR ${CMAKE_INSTALL_PREFIX}/program/bin) ### IMPORTANT ###
 
 # exports json file (optional)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

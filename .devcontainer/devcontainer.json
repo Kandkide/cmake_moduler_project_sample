@@ -1,8 +1,8 @@
 {
-  "name": "C++ Development with Docker Compose",
-  "dockerComposeFile": ["../../docker/compose/docker-compose-cpp.yml"],  // Docker Composeファイルを指定
+  "name": "C++ project template",
+  "dockerComposeFile": ["../../docker/compose/docker-compose-template.yml"],  // Docker Composeファイルを指定
   // "dockerComposeFile": ["../../docker/compose/docker-compose.yml", "docker-compose.override.yml"],  // Docker Composeファイルを指定
-  "service": "cpp-dev",  // 使用するサービス名を指定（docker-compose.ymlのサービス名）
+  "service": "cpp-template",  // 使用するサービス名を指定（docker-compose.ymlのサービス名）
   "workspaceFolder": "/home/hoge",  // コンテナ内の作業フォルダ 
   "remoteUser": "hoge",
   "postStartCommand": "sudo chown hoge:hoge /home/hoge/.git",
@@ -16,7 +16,8 @@
     "ms-vscode.cpptools-extension-pack",
     "ms-azuretools.vscode-docker",
     "caetanominuzzo.terminal-to-here",
-    "jsynowiec.vscode-insertdatestring"
+    "jsynowiec.vscode-insertdatestring",
+    "patricklee.vsnotes"
   ],
   "mounts": [
     "source=${localWorkspaceFolder},target=/home/hoge,type=bind"
