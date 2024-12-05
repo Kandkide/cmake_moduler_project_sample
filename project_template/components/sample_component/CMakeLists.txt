@@ -1,10 +1,8 @@
-# components.leaf-1.2.7
+# components.leaf-2.0.0
+# (mod from 1.2.7: supposed directory structure changed!)
 # Set names
 get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 set(LIB_TARGET_NAME ${DIR_NAME}) # Library name
-set(LIB_HEADER_NAME ${DIR_NAME}.hpp)
-set(LIB_CPP_FILE_NAME ${DIR_NAME}.cpp)
-
 
 # --- reading from SettingComponentsLeaf.cmake if it exists else define here --- #
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/SettingComponentsLeaf.cmake")
@@ -15,57 +13,61 @@ else()
 endif()
 # ------ #
 
-# LIB_CPP_FILE_NAMEのフルパスを作成
-set(FULL_PATH_TO_LIB_CPP ${CMAKE_CURRENT_SOURCE_DIR}/${LIB_CPP_FILE_NAME})
+# Collect header and source files
+set(LIB_HEADER_FILES "")
+set(LIB_SOURCE_FILES "")
 
-# LIB_CPP_FILE_NAMEが存在するかどうかを確認
-if(EXISTS ${FULL_PATH_TO_LIB_CPP})
+# Add all headers from "include" directory
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/include")
+    file(GLOB_RECURSE LIB_HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp")
+endif()
 
+# Add all sources from "src" directory
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src")
+    file(GLOB_RECURSE LIB_SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+endif()
+
+# Add library only if source files are found
+if(LIB_SOURCE_FILES)
   # Library
-  add_library(${LIB_TARGET_NAME} ${LIB_HEADER_NAME} ${LIB_CPP_FILE_NAME} ${OTHER_SOURCE_FILE_NAMES})
+  add_library(${LIB_TARGET_NAME} ${LIB_HEADER_FILES} ${LIB_SOURCE_FILES} ${OTHER_SOURCE_FILE_NAMES})
 
-  # Set include directories for the target
+  # Include directories
   target_include_directories(${LIB_TARGET_NAME}
     PUBLIC
       $<INSTALL_INTERFACE:include>
-      $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+      $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   )
 
-  # Install targets
-  install(TARGETS ${LIB_TARGET_NAME} # ${EXE_TARGET_NAME}
-      EXPORT ${MY_PACKAGE_NAME}Targets # ${MY_PACKAGE_NAME} must be defined in root project
-      # RUNTIME DESTINATION bin
+  # Install library and headers
+  install(TARGETS ${LIB_TARGET_NAME}
+      EXPORT ${MY_PACKAGE_NAME}Targets
       LIBRARY DESTINATION lib/${MY_INSTALL_SUBDIRECTORY_NAME}
       ARCHIVE DESTINATION lib/${MY_INSTALL_SUBDIRECTORY_NAME}
   )
-
-  # Install the headers
-  install(FILES ${LIB_HEADER_NAME} DESTINATION include/${MY_INSTALL_SUBDIRECTORY_NAME})
+  install(FILES ${LIB_HEADER_FILES} DESTINATION include/${MY_INSTALL_SUBDIRECTORY_NAME})
 
 else()
-
-  # Library
+  # INTERFACE library for header-only case
   add_library(${LIB_TARGET_NAME} INTERFACE)
 
-  # Set include directories for the target
+  # Include directories
   target_include_directories(${LIB_TARGET_NAME}
     INTERFACE
       $<INSTALL_INTERFACE:include>
-      $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+      $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   )
 
-  # Install targets
+  # Install headers only
   install(TARGETS ${LIB_TARGET_NAME}
-      EXPORT ${MY_PACKAGE_NAME}Targets # ${MY_PACKAGE_NAME} must be defined in root project
+      EXPORT ${MY_PACKAGE_NAME}Targets
       LIBRARY DESTINATION lib/${MY_INSTALL_SUBDIRECTORY_NAME}
       ARCHIVE DESTINATION lib/${MY_INSTALL_SUBDIRECTORY_NAME}
   )
-
-  # Install the headers
-  install(FILES ${LIB_HEADER_NAME} DESTINATION include/${MY_INSTALL_SUBDIRECTORY_NAME})
-
+  install(FILES ${LIB_HEADER_FILES} DESTINATION include/${MY_INSTALL_SUBDIRECTORY_NAME})
 endif()
 
+# Link dependencies
 target_link_libraries(${LIB_TARGET_NAME} PRIVATE ${MY_LINK_ITEMS_LIST})
 
 target_include_directories(${LIB_TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/header_only)

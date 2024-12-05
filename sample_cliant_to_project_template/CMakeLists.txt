@@ -1,4 +1,4 @@
-# single folder application 1.1.9
+# single folder application 1.2.0
 cmake_minimum_required(VERSION 3.5...3.27)
 
 # ------------------------------------------------------------- #
@@ -78,7 +78,7 @@ find_package(project_template REQUIRED)
 # find_package(pybind11 REQUIRED)
 
 # append items to MY_LINK_ITEMS_LIST if necessary
-set(MY_LINK_ITEMS_LIST "project_template::aggregate") # append here: "Qt6::Widgets" etc.
+set(MY_LINK_ITEMS_LIST "project_template::sample_component") # append here: "Qt6::Widgets" etc.
 # -------------------- MAIN BUISINESS END -------------------- #
 
 target_link_libraries(${EXE_TARGET_NAME} PRIVATE ${MY_LINK_ITEMS_LIST})
@@ -87,21 +87,21 @@ target_link_libraries(${EXE_TARGET_NAME} PRIVATE ${MY_LINK_ITEMS_LIST})
 # target_include_directories(${EXE_TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/header_only)
 
 
-# --- EXTRE: alternative executables related --- #
-# MY_LINK_ITEMS_LIST is used inside. so it must be set beforehand. (CODE ORDER MATTERS)
+# # --- EXTRE: alternative executables related --- #
+# # MY_LINK_ITEMS_LIST is used inside. so it must be set beforehand. (CODE ORDER MATTERS)
 
-file(GLOB SOURCES "alt*.cpp")
+# file(GLOB SOURCES "alt*.cpp")
 
-foreach(SOURCE_FILE ${SOURCES})
-    get_filename_component(EXE_NAME ${SOURCE_FILE} NAME_WE)
-    set(EXE_NAME ${EXE_TARGET_NAME}_${EXE_NAME})
-    add_executable(${EXE_NAME} ${SOURCE_FILE})
-    target_link_libraries(${EXE_NAME} PRIVATE ${MY_LINK_ITEMS_LIST})
+# foreach(SOURCE_FILE ${SOURCES})
+#     get_filename_component(EXE_NAME ${SOURCE_FILE} NAME_WE)
+#     set(EXE_NAME ${EXE_TARGET_NAME}_${EXE_NAME})
+#     add_executable(${EXE_NAME} ${SOURCE_FILE})
+#     target_link_libraries(${EXE_NAME} PRIVATE ${MY_LINK_ITEMS_LIST})
 
-    add_custom_command(TARGET ${EXE_NAME}
-                       POST_BUILD
-                       COMMAND ${CMAKE_COMMAND} -E echo "Running ${EXE_NAME}..."
-                       COMMAND $<TARGET_FILE:${EXE_NAME}>
-                       WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
-endforeach()
+#     add_custom_command(TARGET ${EXE_NAME}
+#                        POST_BUILD
+#                        COMMAND ${CMAKE_COMMAND} -E echo "Running ${EXE_NAME}..."
+#                        COMMAND $<TARGET_FILE:${EXE_NAME}>
+#                        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+# endforeach()
 

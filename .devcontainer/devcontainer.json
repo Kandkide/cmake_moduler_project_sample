@@ -5,7 +5,7 @@
   "service": "cpp-template",  // 使用するサービス名を指定（docker-compose.ymlのサービス名）
   "workspaceFolder": "/home/hoge",  // コンテナ内の作業フォルダ 
   "remoteUser": "hoge",
-  "postStartCommand": "sudo chown hoge:hoge /home/hoge/.git",
+  "postStartCommand": "sudo chown hoge:hoge /home/hoge/.git >/dev/null", //  >/dev/nullは"Done. Press any key to close the terminal."の表示を抑止のため
   "settings": {
     "terminal.integrated.defaultProfile.linux": "bash"
   },
@@ -17,7 +17,8 @@
     "ms-azuretools.vscode-docker",
     "caetanominuzzo.terminal-to-here",
     "jsynowiec.vscode-insertdatestring",
-    "patricklee.vsnotes"
+    "patricklee.vsnotes",
+    "shd101wyy.markdown-preview-enhanced"
   ],
   "mounts": [
     "source=${localWorkspaceFolder},target=/home/hoge,type=bind"

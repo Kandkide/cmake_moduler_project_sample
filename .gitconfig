@@ -2,4 +2,4 @@
 	email = kandkide@gmail.com
 	name = kandkide
 [credential]
-	helper = "!f() { /home/hoge/.vscode-server/bin/f1a4fb101478ce6ec82fe9627c43efbf9e98c813/node /tmp/vscode-remote-containers-fc3f65ce-9132-4587-9236-30e2f0ec36a9.js git-credential-helper $*; }; f"
+	helper = "!f() { /home/hoge/.vscode-server/bin/f1a4fb101478ce6ec82fe9627c43efbf9e98c813/node /tmp/vscode-remote-containers-2998e659-f1a4-4495-80f5-e5cac3f53fc3.js git-credential-helper $*; }; f"
