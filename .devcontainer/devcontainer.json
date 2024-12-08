@@ -1,11 +1,12 @@
 {
   "name": "C++ project template",
-  "dockerComposeFile": ["../../docker/compose/docker-compose-template.yml"],  // Docker Composeファイルを指定
+  "dockerComposeFile": ["../docker-compose.yml"],  // Docker Composeファイルを指定
   // "dockerComposeFile": ["../../docker/compose/docker-compose.yml", "docker-compose.override.yml"],  // Docker Composeファイルを指定
   "service": "cpp-template",  // 使用するサービス名を指定（docker-compose.ymlのサービス名）
   "workspaceFolder": "/home/hoge",  // コンテナ内の作業フォルダ 
   "remoteUser": "hoge",
-  "postStartCommand": "sudo chown hoge:hoge /home/hoge/.git >/dev/null", //  >/dev/nullは"Done. Press any key to close the terminal."の表示を抑止のため
+  "postCreateCommand": "./.devcontainer/post-create.sh", //  >/dev/nullは"Done. Press any key to close the terminal."の表示を抑止のため
+  "postStartCommand": "./.devcontainer/post-start.sh", 
   "settings": {
     "terminal.integrated.defaultProfile.linux": "bash"
   },

@@ -51,12 +51,15 @@ cmakelists_check.exe
 # GPG（GNU Privacy Guard）に関連する設定
 .gnupg/
 
-#
+# bash
 *.bash_history
 
 # pipx install here
 .local/
 
+# dbus
+.config/
+.dbus/
 
 # why followings are not working?
 .onCreateCommandMarker

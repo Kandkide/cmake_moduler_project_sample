@@ -1,0 +1,78 @@
+x-base-config:
+  &base-config
+    # build:
+    #   context: ..
+    #   dockerfile: .devcontainer/Dockerfile  # Dockerfileの指定
+    image: gcc1420qt:0.1.4
+    volumes:
+      - .:/home/hoge
+      # WSLg
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /mnt/wslg:/mnt/wslg
+      # ホストのタイムゾーン情報をマウント
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    # tmpfs:
+    #   # - /run:rw,noexec,nosuid,size=64m
+    #   - /run
+    environment:
+      - TZ=Asia/Tokyo  # タイムゾーンの設定を追加(上のホストのタイムゾーン設定と矛盾しなように気を付けること)
+      - LANG=ja_JP.UTF-8 # ロケール日本語
+      # - LANGUAGE=ja_JP:ja
+      # - LC_ALL=ja_JP.UTF-8
+      - QT_QPA_PLATFORM=xcb # qt6でのwarning(qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "")の抑制
+      - QT_SCALE_FACTOR=2 # Qtのウィンドウ全体がスケールアップして大きく表示
+      # - QT_FONT_DPI=120 # DPI値を設定（96がデフォルト）フォント表示の大きさ
+      # フォントスケールを調整(thunar等のGUIに影響)
+      - GDK_SCALE=2.5
+      - GDK_DPI_SCALE=1
+      # WSLg
+      - DISPLAY=$DISPLAY
+      - WAYLAND_DISPLAY=$WAYLAND_DISPLAY
+      - XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR
+      - PULSE_SERVER=$PULSE_SERVER
+      # GPUを使うための設定
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      # bashの履歴を残すための設定１
+      - HISTFILE=/home/hoge/.devcontainer/.bash_history
+      - HISTSIZE=10000
+      - HISTFILESIZE=20000
+    # bashの履歴を残すための設定２
+    entrypoint: ["/bin/bash", "-c", "shopt -s histappend && PROMPT_COMMAND='history -a; $PROMPT_COMMAND' && exec /bin/bash"]
+    # GPUを使うための設定
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities:
+              - gpu
+    devices:
+      - "/dev/dri" # GPUサポート（必要に応じて）
+    extra_hosts:
+      - "host.docker.internal:host-gateway" # X11ディスプレイサーバの共有
+    # ports:
+    #   - "3000:3000"
+    working_dir: /home/hoge
+    stdin_open: true
+    tty: true
+
+# services:
+#   cpp-dev:
+#     <<: *base-config
+#     container_name: cpp-dev
+
+#   cpp-py-dev:
+#     <<: *base-config
+#     container_name: cpp-py-dev
+#     environment:
+#       - GDK_SCALE=2
+
+#   cpp-template:
+#     <<: *base-config
+#     container_name: cpp-template
+
+services:
+  cpp-template:
+    <<: *base-config
+    container_name: cpp-template
