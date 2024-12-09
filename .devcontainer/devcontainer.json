@@ -1,15 +1,13 @@
 {
-  "name": "C++ project template",
   "dockerComposeFile": ["../docker-compose.yml"],  // Docker Composeファイルを指定
-  // "dockerComposeFile": ["../../docker/compose/docker-compose.yml", "docker-compose.override.yml"],  // Docker Composeファイルを指定
-  "service": "cpp-template",  // 使用するサービス名を指定（docker-compose.ymlのサービス名）
   "workspaceFolder": "/home/hoge",  // コンテナ内の作業フォルダ 
   "remoteUser": "hoge",
-  "postCreateCommand": "./.devcontainer/post-create.sh", //  >/dev/nullは"Done. Press any key to close the terminal."の表示を抑止のため
-  "postStartCommand": "./.devcontainer/post-start.sh", 
   "settings": {
     "terminal.integrated.defaultProfile.linux": "bash"
   },
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/home/hoge,type=bind"
+  ],
   "extensions": [
     "ms-vscode.cpptools",
     "ms-vscode.cmake-tools",
@@ -21,7 +19,8 @@
     "patricklee.vsnotes",
     "shd101wyy.markdown-preview-enhanced"
   ],
-  "mounts": [
-    "source=${localWorkspaceFolder},target=/home/hoge,type=bind"
-  ]
+  // "postCreateCommand": "./.devcontainer/postCommands/post-create.sh", 
+  // "postStartCommand": "./.devcontainer/postCommands/post-start.sh", 
+  "name": "C++ project template",
+  "service": "cpp-template"  // 使用するサービス名を指定（docker-compose.ymlのサービス名）
 }
