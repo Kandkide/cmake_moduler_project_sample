@@ -31,6 +31,9 @@ Copy project_template directory and customize it for your use.
 
 * Ubuntu or Debian: Put **"sudo"** at the beginning (when install). And replace **"\\"** with **"/"**.
 
+* "build-install-all-in-one.sh" conducts step 3. to 6. at once.
+* "build-install-all-in-one.sh **no-install**" conducts step 3. only.
+
 ## Note
 * Default install destination is **user home directory** (Windows) 
 * Default install destination is **/usr/local** (UNIX) 

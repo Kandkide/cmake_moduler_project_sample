@@ -1,12 +1,10 @@
-# applications.bottom.SettingAppsBottom.cmake-1.3.2
+# applications.bottom.SettingAppsBottom.cmake-1.3.1
 
 set(MY_PROJECT_VERSION 1.2.3) # project version
 # set(EXE_SOURCE_FILE_NAMES "main.cpp") ### add sources if any ###
+set(RUN_EXECUTABLE_POST_BUILD on) # execute exe file after build
 set(COPY_EXECUTABLE_TO_PROJECT_ROOT off) # copy exe file after build
 
-if(NOT DEFINED RUN_EXECUTABLE_POST_BUILD)
-    set(RUN_EXECUTABLE_POST_BUILD on) # execute exe file after build
-endif()
 
 # -------------------- MAIN BUISINESS -------------------- #
 # # Qt 6を使用する場合 (if Qt6 is linked in including library, find_package is enough in this place)
