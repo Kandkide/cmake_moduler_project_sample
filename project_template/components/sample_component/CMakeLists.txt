@@ -71,3 +71,6 @@ endif()
 target_link_libraries(${LIB_TARGET_NAME} PRIVATE ${MY_LINK_ITEMS_LIST})
 
 target_include_directories(${LIB_TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/header_only)
+
+# add tests directory
+add_subdirectory(tests)
