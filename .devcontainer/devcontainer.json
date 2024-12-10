@@ -19,7 +19,7 @@
     "patricklee.vsnotes",
     "shd101wyy.markdown-preview-enhanced"
   ],
-  // "postCreateCommand": "./.devcontainer/postCommands/post-create.sh", 
+  "postCreateCommand": "./.devcontainer/postCommands/post-create.sh", 
   // "postStartCommand": "./.devcontainer/postCommands/post-start.sh", 
   "name": "C++ project template",
   "service": "cpp-template"  // 使用するサービス名を指定（docker-compose.ymlのサービス名）
