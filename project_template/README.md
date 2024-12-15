@@ -29,9 +29,21 @@ Copy project_template directory and customize it for your use.
 8. run application:   
 **cmake --build build --target run_sample_application**  
 
+9. test
+**ctest --test-dir build/**
+
+* suppress auto-run after build
+**cmake -S . -B build -DRUN_EXECUTABLE_POST_BUILD=off**
+
+* "build-install-all-in-one.sh" conducts step 3. to 6. at once.
+* "build-install-all-in-one.sh **no-install**" conducts step 3. only.
+
+* Ubuntu or Debian: Put **"sudo"** at the beginning (when install). And replace **"\\"** with **"/"**.
+
 ## Note
-* Default install destination is **user home directory**  
-* (files are installed to its subdirectories, **lib/, include/, lib/cmake/,** and **program/bin/**, depending on file type.)  
+* Default install destination is **user home directory** (Windows) 
+* Default install destination is **/usr/local** (UNIX) 
+* (files are installed to its subdirectories, **lib/, include/, lib/cmake/,** **program/bin/** (Windows), **bin/** (UNIX), depending on file type.)  
 * As for header-only, one more layer of subdirectory is made (using source directory name)  
 * For customizing destination, **see the last item below**.  
 
@@ -87,7 +99,7 @@ In **SettingComponentsLeaf.cmake** or **SettingAppsBottom.cmake**.
 * (1) enables to install header-only libraries as a set.  
 * (2) using them inside the project without installing them.  
 
-# Customize install destination
+# Customize install destination (Windows)
 In CMakeLists.txt **in project root directory**.   
 Modify following three variables according to your project.  
   
@@ -98,5 +110,6 @@ Modify following three variables according to your project.
 **set(MY_HEADER_ONLY_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})**  
   
 * They determine install destination of components, executables, and header-only, respectively.
+* On **UNIX**, these installation locations are relatively well-defined by convention, and we adopt **"/usr/local"** directory.
 
-(as of 2024-11-18 00:22:21)
+(as of 2024-12-15 17:04:55)
