@@ -13,15 +13,29 @@ Copy project_template directory and customize it for your use.
 3. Build:  
 **cmake -S . -B build**   
 **cmake --build build**  
-  
+
+       - disable tests 
+         cmake -S . -B build -DENABLE_TESTS=OFF
+       - disable examples
+         cmake -S . -B build -DENABLE_EXAMPLES=OFF
+       - suppress auto-run after build
+         cmake -S . -B build -DRUN_EXECUTABLE_POST_BUILD=OFF
+
 4. Install libraries:  
 **cmake --install .\build\components**\   
-  
+
+       - Ubuntu or Debian: Put "sudo" at the beginning (when install). And replace "\" with "/".
+
 5. Install executables:  
 **cmake --install .\build\applications**\  
   
 6. Install header-only:  
 **cmake --install .\build\header_only**\  
+
+7. Conducts step 3. to 6. at once (use bash script)
+**build-install-all-in-one.sh**
+
+       - "build-install-all-in-one.sh no-install" conducts step 3. only.
 
 7. install executable from a single application:   
 **cmake --install .\build\applications\sample_application**\  
@@ -30,15 +44,8 @@ Copy project_template directory and customize it for your use.
 **cmake --build build --target run_sample_application**  
 
 9. test
-**ctest --test-dir build/**
+**ctest --test-dir build**
 
-* suppress auto-run after build
-**cmake -S . -B build -DRUN_EXECUTABLE_POST_BUILD=off**
-
-* "build-install-all-in-one.sh" conducts step 3. to 6. at once.
-* "build-install-all-in-one.sh **no-install**" conducts step 3. only.
-
-* Ubuntu or Debian: Put **"sudo"** at the beginning (when install). And replace **"\\"** with **"/"**.
 
 ## Note
 * Default install destination is **user home directory** (Windows) 
@@ -112,4 +119,4 @@ Modify following three variables according to your project.
 * They determine install destination of components, executables, and header-only, respectively.
 * On **UNIX**, these installation locations are relatively well-defined by convention, and we adopt **"/usr/local"** directory.
 
-(as of 2024-12-15 17:04:55)
+(as of 2024-12-16 00:13:06)

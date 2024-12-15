@@ -6,3 +6,4 @@ v.1.1.2#locate docker/Dockerfile.014#2024-12-10 01:17:52
 v.1.1.3#enact-build-install-all-in-one.sh and build-install-all-in-one.sh#2024-12-10 04:13:04
 v.1.1.4#call post-create.sh as postCreateCommand in devcontainer.json#2024-12-10 16:08:52
 v.1.1.6#append tests subdirectory under sample_component directory#2024-12-11 03:56:23
+v.1.2.0#append examples subdirectory under sample_component directory#2024-12-16 00:20:08

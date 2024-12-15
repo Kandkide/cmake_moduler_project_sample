@@ -72,5 +72,29 @@ target_link_libraries(${LIB_TARGET_NAME} PRIVATE ${MY_LINK_ITEMS_LIST})
 
 target_include_directories(${LIB_TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/header_only)
 
-# add tests directory
-add_subdirectory(tests)
+# # add tests directory
+# add_subdirectory(tests)
+
+# # add examples directory
+# add_subdirectory(examples)
+
+# Define options to include examples and tests
+option(ENABLE_EXAMPLES "Include examples in the build" ON)
+option(ENABLE_TESTS "Include tests in the build" ON)
+
+# Conditionally add the examples directory
+if(ENABLE_EXAMPLES)
+    message(STATUS "Including examples in the build.")
+    add_subdirectory(examples)
+else()
+    message(STATUS "Excluding examples from the build.")
+endif()
+
+# Conditionally add the tests directory
+if(ENABLE_TESTS)
+    message(STATUS "Including tests in the build.")
+    add_subdirectory(tests)
+else()
+    message(STATUS "Excluding tests from the build.")
+endif()
+
