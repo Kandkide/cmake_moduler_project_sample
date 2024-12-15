@@ -48,9 +48,9 @@ Copy the directory and customize it for your use.
 
 ## Directory structure
 
-components_only/   ***1**
-├── components/  
-│   ├── sample_component/   ***2**
+components_only/   ***1**   
+├── components/   
+│   ├── sample_component/   ***2**  
 │   │   ├── include/   
 │   │   ├── src/   
 │   │   ├── examples/   
