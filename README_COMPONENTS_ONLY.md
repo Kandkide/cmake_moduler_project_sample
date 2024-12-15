@@ -15,9 +15,11 @@ Copy the directory and customize it for your use.
        - After instlalling (step 4), cmake can find this package and use libraries in it by "package name::library name".
        - An example of usage in external cmakelists.txt would be as follows,
 
-         find_package(package_name REQUIRED)
-         target_link_libraries(someTarget PRIVATE package_name::library_name)
+         find_package(package_name REQUIRED)  
+         target_link_libraries(someTarget PRIVATE package_name::library_name)  
 
+        + including header in cliant source may be necessary:  
+          #include <components_only/sample_component.hpp>
 3. Build:  
 **cmake -S . -B build**   
 **cmake --build build**  

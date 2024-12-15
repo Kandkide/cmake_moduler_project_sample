@@ -8,3 +8,4 @@ v.1.1.4#call post-create.sh as postCreateCommand in devcontainer.json#2024-12-10
 v.1.1.6#append tests subdirectory under sample_component directory#2024-12-11 03:56:23
 v.1.2.0#append examples subdirectory under sample_component directory#2024-12-16 00:20:08
 v.1.2.2#Extract the parts that were part of project_template as components_only. Leave project_template as it is.#2024-12-16 02:46:40
+v.1.2.3#Extract the parts that were part of project_template as applications_only. Leave project_template as it is.#2024-12-16 02:46:40
