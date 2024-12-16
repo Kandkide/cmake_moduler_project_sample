@@ -20,6 +20,7 @@ Copy the directory and customize it for your use.
 
         + including header in cliant source may be necessary:  
           #include <components_only/sample_component.hpp>
+          
 3. Build:  
 **cmake -S . -B build**   
 **cmake --build build**  
