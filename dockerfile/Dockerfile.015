@@ -45,6 +45,7 @@ RUN apt-get update && apt-get install -y  --no-install-recommends \
     nlohmann-json3-dev \
     # goole test
     libgtest-dev \
+    libgmock-dev \
     # locale and sudo
     locales-all \
     sudo \
@@ -58,8 +59,8 @@ RUN apt-get update && apt-get install -y  --no-install-recommends \
 ENV PATH="/usr/lib/qt6/bin:${PATH}"
 ENV QT_QPA_PLATFORM=offscreen
 
-# Google Testをビルドしてインストール
-RUN cd /usr/src/gtest && cmake . && make && cp lib/*.a /usr/lib
+# # Google Testをビルドしてインストール
+# RUN cd /usr/src/gtest && cmake . && make && cp lib/*.a /usr/lib
 
 # デフォルトで python3.11 を使用
 RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1 && \
@@ -80,8 +81,8 @@ WORKDIR /home/hoge
 # 切り替え
 USER hoge
 
-# 自作実行ファイルを入れる場所とする
-ENV PATH="/home/hoge/bin:$PATH"
+# # 自作実行ファイルを入れる場所とする
+# ENV PATH="/home/hoge/bin:$PATH"
 
 # # 必要に応じてポートを公開（デバッグ用）
 # EXPOSE 3000

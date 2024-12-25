@@ -72,13 +72,13 @@ install(TARGETS ${EXE_TARGET_NAME} DESTINATION ${MY_EXE_EXPORT_DIR})
 # # Find the installed sample_components package and link it with the executable
 # find_package(sample_components REQUIRED)
 # # target_link_libraries(${EXE_TARGET_NAME} PRIVATE sample_components::component1) # append "sample_components::component1"
-find_package(project_template REQUIRED)
+find_package(components_only REQUIRED)
 
 # # supposing pybind11 is linked in sample_components' components
 # find_package(pybind11 REQUIRED)
 
 # append items to MY_LINK_ITEMS_LIST if necessary
-set(MY_LINK_ITEMS_LIST "project_template::sample_component") # append here: "Qt6::Widgets" etc.
+set(MY_LINK_ITEMS_LIST "components_only::sample_component") # append here: "Qt6::Widgets" etc.
 # -------------------- MAIN BUISINESS END -------------------- #
 
 target_link_libraries(${EXE_TARGET_NAME} PRIVATE ${MY_LINK_ITEMS_LIST})

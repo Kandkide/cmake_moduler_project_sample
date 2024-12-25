@@ -10,10 +10,13 @@ v.1.2.0#append examples subdirectory under sample_component directory#2024-12-16
 v.1.2.2#Extract the parts that were part of project_template as components_only. Leave project_template as it is.#2024-12-16 02:46:40
 v.1.2.3#Extract the parts that were part of project_template as applications_only. Leave project_template as it is.#2024-12-16 02:46:40
 v.1.2.4#Extract the parts that were part of project_template as headers_only. Leave project_template as it is.#2024-12-16 12:19:22
+v.1.3.0#delete project_template/ and create tamplates/#2024-12-25 12:40:34
 
 
 [todo]
-separate header_only ... under way
 create tests directory in applications_only
+
+[done?]
+separate header_only ... under way
 
 
