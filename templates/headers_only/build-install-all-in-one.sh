@@ -1,4 +1,5 @@
 #!/bin/bash
+# build-install-all-in-one.sh-1.0.1
 
 # スクリプトが存在するディレクトリを取得
 SCRIPT_DIR=$(cd $(dirname $0) && pwd)
@@ -14,7 +15,7 @@ fi
 
 # CMakeによる構成
 echo "Running CMake configuration..."
-cmake -S "$SCRIPT_DIR" -B "$BUILD_DIR" -DRUN_EXECUTABLE_POST_BUILD="off"
+cmake -S "$SCRIPT_DIR" -B "$BUILD_DIR" -DRUN_EXECUTABLE_POST_BUILD="off" -DENABLE_TESTS="off" -DENABLE_EXAMPLES="off"
 if [ $? -ne 0 ]; then
     echo "CMake configuration failed."
     exit 1

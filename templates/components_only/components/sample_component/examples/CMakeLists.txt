@@ -1,4 +1,4 @@
-# components.examples.leaf-0.0.1
+# components.examples.leaf-0.0.2
 
 # Search for all example*.cpp files in the current directory
 file(GLOB EXAMPLE_SOURCES "example*.cpp")
@@ -20,7 +20,7 @@ foreach(EXAMPLE_SOURCE ${EXAMPLE_SOURCES})
 
     # Add executable target
     add_executable(${EXAMPLE_TARGET_NAME} ${EXAMPLE_SOURCE})
-    target_link_libraries(${EXAMPLE_TARGET_NAME} PRIVATE ${LIB_TARGET_NAME})
+    target_link_libraries(${EXAMPLE_TARGET_NAME} PRIVATE ${COMMON_LIBRARIES})
 
     # Append to the list of executable targets
     list(APPEND EXECUTABLE_TARGETS ${EXAMPLE_TARGET_NAME})

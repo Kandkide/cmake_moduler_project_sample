@@ -37,8 +37,8 @@ endif()
 # )
 # # target_link_libraries(${EXE_TARGET_NAME} PRIVATE PkgConfig::LIBAV) # append "PkgConfig::LIBAV" to MY_LINK_ITEMS_LIST instead
 
-find_package(kkd-lib REQUIRED)
+find_package(components_only REQUIRED)
 
 # append items to MY_LINK_ITEMS_LIST if necessary
-set(MY_LINK_ITEMS_LIST "kkd-lib::sample_component") # append here: "Qt6::Widgets" "pybind11::embed" ${OpenCV_LIBS} "PkgConfig::LIBAV" etc.
+set(MY_LINK_ITEMS_LIST "components_only::sample_component") # append here: "Qt6::Widgets" "pybind11::embed" ${OpenCV_LIBS} "PkgConfig::LIBAV" etc.
 # -------------------- MAIN BUISINESS END -------------------- #

@@ -1,4 +1,4 @@
-# components.examples.leaf-0.0.2
+# header_only.examples.leaf-0.0.1
 
 # Search for all example*.cpp files in the current directory
 file(GLOB EXAMPLE_SOURCES "example*.cpp")
@@ -8,7 +8,6 @@ message(STATUS "Found example files: ${EXAMPLE_SOURCES}")
 
 # Common libraries to link
 set(COMMON_LIBRARIES
-    ${LIB_TARGET_NAME}  # Link with the custom library
     # Add additional libraries here if needed
 )
 
@@ -16,11 +15,14 @@ set(COMMON_LIBRARIES
 foreach(EXAMPLE_SOURCE ${EXAMPLE_SOURCES})
     # Generate executable target name
     get_filename_component(EXAMPLE_NAME ${EXAMPLE_SOURCE} NAME_WE)
-    set(EXAMPLE_TARGET_NAME "${EXAMPLE_NAME}_${LIB_TARGET_NAME}")
+    set(EXAMPLE_TARGET_NAME "${EXAMPLE_NAME}")
 
     # Add executable target
     add_executable(${EXAMPLE_TARGET_NAME} ${EXAMPLE_SOURCE})
     target_link_libraries(${EXAMPLE_TARGET_NAME} PRIVATE ${COMMON_LIBRARIES})
+
+    # Link dependencies
+    target_include_directories(${EXAMPLE_TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/header_only)
 
     # Append to the list of executable targets
     list(APPEND EXECUTABLE_TARGETS ${EXAMPLE_TARGET_NAME})
@@ -33,3 +35,4 @@ foreach(EXAMPLE_SOURCE ${EXAMPLE_SOURCES})
         COMMENT "Running ${EXAMPLE_TARGET_NAME}..."
     )
 endforeach()
+
