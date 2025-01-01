@@ -13,6 +13,7 @@ v.1.2.4#Extract the parts that were part of project_template as headers_only. Le
 v.1.3.0#delete project_template/ and create tamplates/#2024-12-25 12:40:34
 v.1.3.1#sample_all_combined/#2024-12-25 12:59:57
 v.1.3.3#examples and tests are added to header_only/#2024-12-27 01:07:27
+v.1.4.0#sample_all_combined > old/12/#2025-01-01 18:08:45
 
 
 [todo]

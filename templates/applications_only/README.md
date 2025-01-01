@@ -18,11 +18,11 @@ Copy applications_only directory and customize it for your use.
 5. Install executables:  
 **sudo cmake --install build**   
   
-<!-- 7. install executable from a single application:   
+7. install executable from a single application:   
 **cmake --install .\build\applications\sample_application**\  
 
 8. run application:   
-**cmake --build build --target run_sample_application**   -->
+**cmake --build build --target run_sample_application**  
 
 <!-- 9. test
 **ctest --test-dir build** -->
@@ -62,4 +62,4 @@ Modify following variables according to your project.
 * They determine install destination of components, executables, and header-only, respectively.
 * On **UNIX**, these installation locations are relatively well-defined by convention, and we adopt **"/usr/local"** directory.
 
-(as of 2024-12-16 03:41:03)
+(as of 2024-12-28 13:51:43)

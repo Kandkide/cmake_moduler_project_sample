@@ -1,4 +1,4 @@
-# applications.bottom.SettingAppsBottom.cmake-1.3.2
+# applications.bottom.SettingAppsBottom.cmake-1.3.3
 
 set(MY_PROJECT_VERSION 1.2.3) # project version
 # set(EXE_SOURCE_FILE_NAMES "main.cpp") ### add sources if any ###
@@ -9,16 +9,13 @@ if(NOT DEFINED RUN_EXECUTABLE_POST_BUILD)
 endif()
 
 # -------------------- MAIN BUISINESS -------------------- #
-# # Qt 6を使用する場合 (if Qt6 is linked in including library, find_package is enough in this place)
+# # Qt6
 # find_package(Qt6 COMPONENTS Widgets REQUIRED)
-# # target_link_libraries(${EXE_TARGET_NAME} PUBLIC Qt6::Widgets)  # append "Qt6::Widgets" to MY_LINK_ITEMS_LIST instead
 
-# # Find the installed sample_components package and link it with the executable
-# find_package(sample_components REQUIRED)
-# # target_link_libraries(${EXE_TARGET_NAME} PRIVATE sample_components::component1) # append "sample_components::component1"
-
-# # supposing pybind11 is linked in sample_components' components
+# # pybind11
 # find_package(pybind11 REQUIRED)
+# find_package(Python3 REQUIRED COMPONENTS Development)
+# include_directories(${Python3_INCLUDE_DIRS})
 
 # # OpneCV
 # find_package(OpenCV REQUIRED)
@@ -36,6 +33,16 @@ endif()
 #     libavutil
 # )
 # # target_link_libraries(${EXE_TARGET_NAME} PRIVATE PkgConfig::LIBAV) # append "PkgConfig::LIBAV" to MY_LINK_ITEMS_LIST instead
+
+# # Boost の指定したバージョンを見つける
+# find_package(Boost 1.70 REQUIRED COMPONENTS program_options)
+
+# # Boost が見つかった場合に include パスやリンクを設定
+# if (Boost_FOUND)
+#     include_directories(${Boost_INCLUDE_DIRS})
+#     # target_link_libraries(your_target_name PRIVATE ${Boost_LIBRARIES})
+# endif()
+
 
 find_package(kkd-lib REQUIRED)
 

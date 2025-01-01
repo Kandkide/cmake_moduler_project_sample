@@ -1,4 +1,4 @@
-# components.leaf.SettingComponentsLeaf-1.2.7
+# components.leaf.SettingComponentsLeaf-1.2.8
 
 set(OTHER_SOURCE_FILE_NAMES "") ### add sources if any ###
 
@@ -30,15 +30,19 @@ set(OTHER_SOURCE_FILE_NAMES "") ### add sources if any ###
 #     libavutil
 # )
 
-# --- NOT IN PACKAGE, Specify library individually --- #
-
 # # Link the executable with the required libraries (windows platform)
-# # target_link_libraries(${LIB_TARGET_NAME} PRIVATE comdlg32 ole32) => append comdlg32 ole32 instead
+# target_link_libraries(${LIB_TARGET_NAME} PRIVATE comdlg32 ole32) => append comdlg32 ole32 instead
 
-# --- INTERNAL LIBRARIES --- #
+# # Boost の指定したバージョンを見つける
+# find_package(Boost 1.70 REQUIRED COMPONENTS program_options)
 
-# # component1に依存する場合（component1は同一プロジェクト内にあるとする）
-# # target_link_libraries(${LIB_TARGET_NAME} PRIVATE component1) => append component1 instead
+# # Boost が見つかった場合に include パスやリンクを設定
+# if (Boost_FOUND)
+#     include_directories(${Boost_INCLUDE_DIRS})
+#     # target_link_libraries(your_target_name PRIVATE ${Boost_LIBRARIES})
+# endif()
+
+# find_package(kkd-lib REQUIRED)
 
 # -------------------- CONTROL INCLUDE AND LINK END -------------------- #
 

@@ -1,6 +1,6 @@
 # headers_only
 Locate (or install) header-only headers to specified directory.
-Does nothing else.
+Build examples and tests.
 
 # Usage in brief
 1. Rename headers_only/header_only/**previous_works** directory. 
@@ -13,6 +13,14 @@ Does nothing else.
    
 3. Build:  
 **cmake -S . -B build**   
+**cmake --build build**  
+
+       - disable tests 
+         cmake -S . -B build -DENABLE_TESTS=OFF
+       - disable examples
+         cmake -S . -B build -DENABLE_EXAMPLES=OFF
+       - disable both
+         cmake -S . -B build -DENABLE_TESTS=OFF -DENABLE_EXAMPLES=OFF
 
 6. Install header-only:  
 **sudo cmake --install build**
@@ -20,8 +28,11 @@ Does nothing else.
 7. Conducts step 3. and 4. at once (use bash script)
 **build-install-all-in-one.sh**
 
-<!-- 9. test
-**ctest --test-dir build** -->
+9. test
+**ctest --test-dir build**
+
+7. run example code
+**cmake --build build --target run_\<example source name\>**
 
 
 ## Directory structure
@@ -29,6 +40,8 @@ Does nothing else.
 headers_only/  
 ├── header_only/  
 │   ├── previous_works/  ***1**    
+│   ├── examples/  
+│   ├── tests/  
 │   └── ...  
 └── ...  
   
@@ -54,4 +67,4 @@ Modify following three variables according to your project.
 * They determine install destination of components, executables, and header-only, respectively.
 * On **UNIX**, these installation locations are relatively well-defined by convention, and we adopt **"/usr/local"** directory.
 
-(as of 2024-12-16 12:11:55)
+(as of 2024-12-28 13:47:42)

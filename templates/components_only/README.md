@@ -43,6 +43,8 @@ Copy the directory and customize it for your use.
 9. test  
 **ctest --test-dir build**  
 
+7. run example code
+**cmake --build build --target run_\<example source name\>_\<library name\>**
 
 ## Install Destination
 * Default install destination is **user home directory** (Windows) 
@@ -88,4 +90,4 @@ Modify following three variables according to your project.
 * They determine install destination of components, executables, and header-only, respectively.
 * On **UNIX**, these installation locations are relatively well-defined by convention, and we adopt **"/usr/local"** directory.
 
-(as of 2024-12-16 00:13:06)
+(as of 2024-12-28 14:40:00)
